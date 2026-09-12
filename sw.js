@@ -1,285 +1,140 @@
-const CACHE_NAME = "beltone-v1";
+const CACHE_NAME = "beltone-v1.1.0";
 
-const APP_FILES = [
+const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css",
-  "./app.js",
   "./manifest.webmanifest",
-  "./icons/icon.svg"
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
 ];
 
-
-/* =========================================
+/* =========================
    INSTALL
-========================================= */
+========================= */
 
-self.addEventListener(
-  "install",
-  event => {
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(APP_SHELL);
+    })
+  );
 
-    event.waitUntil(
+  self.skipWaiting();
+});
 
-      caches
-        .open(CACHE_NAME)
-        .then(cache =>
-          cache.addAll(APP_FILES)
-        )
-
-    );
-
-    self.skipWaiting();
-  }
-);
-
-
-/* =========================================
+/* =========================
    ACTIVATE
-========================================= */
+========================= */
 
-self.addEventListener(
-  "activate",
-  event => {
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      );
+    })
+  );
 
-    event.waitUntil(
+  self.clients.claim();
+});
 
-      caches
-        .keys()
-        .then(keys =>
-          Promise.all(
-            keys
-              .filter(
-                key =>
-                  key !== CACHE_NAME
-              )
-              .map(
-                key =>
-                  caches.delete(key)
-              )
-          )
-        )
-
-    );
-
-    self.clients.claim();
-  }
-);
-
-
-/* =========================================
+/* =========================
    FETCH
-========================================= */
+========================= */
 
-self.addEventListener(
-  "fetch",
-  event => {
+self.addEventListener("fetch", event => {
+  const request = event.request;
 
-    if (
-      event.request.method !==
-      "GET"
-    ) {
-      return;
-    }
+  if (request.method !== "GET") {
+    return;
+  }
 
+  event.respondWith(
+    caches.match(request).then(cachedResponse => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
 
-    event.respondWith(
-
-      caches.match(
-        event.request
-      ).then(cached => {
-
-        if (cached) {
-          return cached;
-        }
-
-
-        return fetch(
-          event.request
-        ).then(response => {
-
+      return fetch(request)
+        .then(response => {
           if (
-            response &&
-            response.status === 200 &&
-            response.type === "basic"
+            !response ||
+            response.status !== 200 ||
+            response.type === "opaque"
           ) {
-
-            const clone =
-              response.clone();
-
-            caches
-              .open(CACHE_NAME)
-              .then(cache => {
-
-                cache.put(
-                  event.request,
-                  clone
-                );
-
-              });
+            return response;
           }
 
+          const responseClone =
+            response.clone();
+
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(
+              request,
+              responseClone
+            );
+          });
 
           return response;
-
-        }).catch(() =>
-          caches.match(
+        })
+        .catch(() => {
+          return caches.match(
             "./index.html"
-          )
-        );
+          );
+        });
+    })
+  );
+});
 
-      })
-
-    );
-  }
-);
-
-
-/* =========================================
+/* =========================
    NOTIFICATION CLICK
-========================================= */
+========================= */
 
 self.addEventListener(
   "notificationclick",
   event => {
-
-    const notification =
-      event.notification;
+    event.notification.close();
 
     const action =
       event.action;
 
+    const data =
+      event.notification.data || {};
+
     const id =
-      notification.data?.id;
-
-
-    notification.close();
-
+      data.id;
 
     if (!id) {
       return;
     }
 
-
-    if (action === "done") {
-
-      event.waitUntil(
-        notifyClients({
-          type: "DONE",
-          id
-        })
-      );
-
-      return;
-    }
-
-
-    if (action === "snooze") {
-
-      event.waitUntil(
-        openAppWithAction(
-          "snooze",
-          id
-        )
-      );
-
-      return;
-    }
-
-
     event.waitUntil(
-      openApp()
+      clients.matchAll({
+        type: "window",
+        includeUncontrolled: true
+      }).then(clientList => {
+
+        const url =
+          `./?action=${encodeURIComponent(
+            action || "open"
+          )}&id=${encodeURIComponent(id)}`;
+
+        for (
+          const client of clientList
+        ) {
+          if ("focus" in client) {
+            client.navigate(url);
+            return client.focus();
+          }
+        }
+
+        if (clients.openWindow) {
+          return clients.openWindow(url);
+        }
+
+      })
     );
   }
 );
-
-
-/* =========================================
-   HELPERS
-========================================= */
-
-async function notifyClients(message) {
-
-  const clients =
-    await self.clients.matchAll({
-      type: "window",
-      includeUncontrolled: true
-    });
-
-
-  if (clients.length) {
-
-    clients.forEach(client => {
-      client.postMessage(message);
-    });
-
-    return;
-  }
-
-
-  await openAppWithAction(
-    message.type === "DONE"
-      ? "done"
-      : "snooze",
-    message.id
-  );
-}
-
-
-async function openApp() {
-
-  const clients =
-    await self.clients.matchAll({
-      type: "window",
-      includeUncontrolled: true
-    });
-
-
-  if (clients.length) {
-
-    return clients[0].focus();
-  }
-
-
-  return self.clients.openWindow(
-    "./"
-  );
-}
-
-
-async function openAppWithAction(
-  action,
-  id
-) {
-
-  const clients =
-    await self.clients.matchAll({
-      type: "window",
-      includeUncontrolled: true
-    });
-
-
-  if (clients.length) {
-
-    const client =
-      clients[0];
-
-    await client.focus();
-
-    client.postMessage({
-      type:
-        action === "done"
-          ? "DONE"
-          : "SNOOZE",
-      id
-    });
-
-    return;
-  }
-
-
-  return self.clients.openWindow(
-    `./?action=${action}&id=${encodeURIComponent(
-      id
-    )}`
-  );
-}
