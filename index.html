@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
 
@@ -21,13 +21,7 @@
 
   <title>Beltone — Your day, in the right tone.</title>
 
-
-  <!-- =====================================================
-       CSS
-  ====================================================== -->
-
   <style>
-
     :root {
       --bg: #f5f5f5;
       --card: #ffffff;
@@ -40,11 +34,9 @@
       --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
     }
 
-
     * {
       box-sizing: border-box;
     }
-
 
     html,
     body {
@@ -63,22 +55,22 @@
       color: var(--text);
     }
 
-
     body {
       min-height: 100vh;
     }
-
 
     button,
     input {
       font: inherit;
     }
 
-
     button {
       cursor: pointer;
     }
 
+    input {
+      direction: inherit;
+    }
 
     .app {
       width: 100%;
@@ -88,7 +80,6 @@
       padding: 20px 18px 40px;
     }
 
-
     /* =========================
        HEADER
     ========================== */
@@ -97,20 +88,21 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 34px;
+      margin-bottom: 28px;
+      gap: 12px;
     }
-
 
     .brand {
       display: flex;
       align-items: center;
       gap: 11px;
+      min-width: 0;
     }
-
 
     .brand-mark {
       width: 42px;
       height: 42px;
+      min-width: 42px;
       border-radius: 13px;
       background: var(--accent);
       color: var(--accent-text);
@@ -121,30 +113,29 @@
       font-size: 21px;
     }
 
-
     .brand-name {
       font-weight: 800;
       letter-spacing: 1.5px;
       font-size: 15px;
     }
 
-
     .brand-tagline {
       color: var(--muted);
       font-size: 11px;
       margin-top: 2px;
+      white-space: nowrap;
     }
-
 
     .icon-btn {
       width: 42px;
       height: 42px;
+      min-width: 42px;
       border: 1px solid var(--border);
       background: var(--card);
+      color: var(--text);
       border-radius: 13px;
       font-size: 18px;
     }
-
 
     /* =========================
        VIEWS
@@ -154,11 +145,9 @@
       animation: fadeIn 0.18s ease;
     }
 
-
     .hidden {
       display: none !important;
     }
-
 
     @keyframes fadeIn {
       from {
@@ -172,6 +161,65 @@
       }
     }
 
+    /* =========================
+       INSTALL CARD
+    ========================== */
+
+    .install-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .install-content {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .install-icon {
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
+      background: var(--accent);
+      color: var(--accent-text);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+
+    .install-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .install-text strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .install-text p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .install-action {
+      border: 0;
+      background: var(--accent);
+      color: var(--accent-text);
+      border-radius: 11px;
+      padding: 9px 12px;
+      font-weight: 700;
+      font-size: 11px;
+      white-space: nowrap;
+    }
 
     /* =========================
        SECTIONS
@@ -184,7 +232,6 @@
       color: var(--muted);
     }
 
-
     .section-header {
       display: flex;
       justify-content: space-between;
@@ -192,12 +239,10 @@
       margin-bottom: 12px;
     }
 
-
     .count {
       color: var(--muted);
       font-size: 12px;
     }
-
 
     /* =========================
        NEXT CARD
@@ -207,7 +252,6 @@
       margin-bottom: 30px;
     }
 
-
     .next-card {
       margin-top: 10px;
       background: var(--card);
@@ -216,17 +260,16 @@
       padding: 20px;
     }
 
-
     .empty-next {
       display: flex;
       gap: 14px;
       align-items: center;
     }
 
-
     .empty-icon {
       width: 48px;
       height: 48px;
+      min-width: 48px;
       border-radius: 15px;
       background: var(--bg);
       display: flex;
@@ -235,11 +278,9 @@
       font-size: 20px;
     }
 
-
     .empty-next strong {
       font-size: 15px;
     }
-
 
     .empty-next p {
       margin: 4px 0 0;
@@ -247,19 +288,16 @@
       font-size: 13px;
     }
 
-
     .next-reminder-title {
       font-size: 22px;
       font-weight: 750;
       margin: 5px 0;
     }
 
-
     .next-reminder-time {
       color: var(--muted);
       font-size: 14px;
     }
-
 
     .next-reminder-tone {
       display: inline-flex;
@@ -270,7 +308,6 @@
       font-size: 12px;
     }
 
-
     /* =========================
        REMINDERS
     ========================== */
@@ -280,7 +317,6 @@
       flex-direction: column;
       gap: 9px;
     }
-
 
     .reminder-item {
       background: var(--card);
@@ -293,11 +329,10 @@
       gap: 12px;
     }
 
-
     .reminder-main {
       min-width: 0;
+      flex: 1;
     }
-
 
     .reminder-title {
       font-weight: 700;
@@ -307,28 +342,26 @@
       text-overflow: ellipsis;
     }
 
-
     .reminder-meta {
       margin-top: 4px;
       color: var(--muted);
       font-size: 12px;
     }
 
-
     .reminder-actions {
       display: flex;
       gap: 5px;
+      direction: ltr;
     }
-
 
     .small-btn {
       border: 0;
       background: var(--bg);
+      color: var(--text);
       width: 34px;
       height: 34px;
       border-radius: 10px;
     }
-
 
     .empty-list {
       padding: 24px 10px;
@@ -336,7 +369,6 @@
       text-align: center;
       font-size: 13px;
     }
-
 
     /* =========================
        BUTTONS
@@ -354,16 +386,14 @@
       margin-top: 20px;
     }
 
-
-    .primary-btn:active {
+    .primary-btn:active,
+    .install-action:active {
       transform: scale(0.98);
     }
-
 
     .add-btn {
       font-size: 15px;
     }
-
 
     .secondary-btn {
       width: 100%;
@@ -371,10 +401,10 @@
       border-radius: 14px;
       padding: 14px;
       background: var(--card);
+      color: var(--text);
       font-weight: 700;
       margin-top: 12px;
     }
-
 
     .danger-btn {
       width: 100%;
@@ -387,7 +417,6 @@
       margin-top: 10px;
     }
 
-
     /* =========================
        PAGE HEADER
     ========================== */
@@ -399,12 +428,10 @@
       margin-bottom: 30px;
     }
 
-
     .page-header h1 {
       margin: 0;
       font-size: 22px;
     }
-
 
     .page-header p {
       margin: 4px 0 0;
@@ -412,16 +439,15 @@
       font-size: 12px;
     }
 
-
     .back-btn {
       width: 42px;
       height: 42px;
       border: 1px solid var(--border);
       background: var(--card);
+      color: var(--text);
       border-radius: 12px;
       font-size: 18px;
     }
-
 
     /* =========================
        FORM
@@ -433,20 +459,17 @@
       gap: 20px;
     }
 
-
     .form label {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-
     .form label > span,
     .field-title {
       font-size: 12px;
       font-weight: 700;
     }
-
 
     .form input[type="text"],
     .form input[type="date"],
@@ -460,11 +483,9 @@
       outline: none;
     }
 
-
     .form input:focus {
       border-color: var(--text);
     }
-
 
     .form-row {
       display: grid;
@@ -472,13 +493,11 @@
       gap: 12px;
     }
 
-
     .field-block {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-
 
     /* =========================
        TONES
@@ -490,7 +509,6 @@
       gap: 8px;
     }
 
-
     .tone-option {
       border: 1px solid var(--border);
       background: var(--card);
@@ -499,16 +517,15 @@
       display: grid;
       grid-template-columns: 38px 1fr 28px;
       align-items: center;
-      text-align: left;
+      text-align: start;
       color: var(--text);
+      width: 100%;
     }
-
 
     .tone-option.selected {
       border-color: var(--text);
       box-shadow: 0 0 0 1px var(--text);
     }
-
 
     .tone-icon {
       width: 34px;
@@ -520,12 +537,10 @@
       justify-content: center;
     }
 
-
     .tone-option strong {
       display: block;
       font-size: 13px;
     }
-
 
     .tone-option small {
       display: block;
@@ -534,12 +549,10 @@
       font-size: 11px;
     }
 
-
     .tone-play {
       text-align: center;
       font-size: 11px;
     }
-
 
     /* =========================
        REPEAT
@@ -551,21 +564,19 @@
       gap: 8px;
     }
 
-
     .radio-option {
       border: 1px solid var(--border);
       background: var(--card);
+      color: var(--text);
       border-radius: 13px;
       padding: 13px;
       flex-direction: row !important;
       align-items: center;
     }
 
-
     .radio-option input {
       accent-color: var(--text);
     }
-
 
     /* =========================
        SETTINGS
@@ -577,7 +588,6 @@
       gap: 8px;
     }
 
-
     .setting-item {
       min-height: 65px;
       background: var(--card);
@@ -587,14 +597,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
     }
-
 
     .setting-item strong {
       display: block;
       font-size: 13px;
     }
-
 
     .setting-item small {
       display: block;
@@ -603,11 +612,9 @@
       font-size: 11px;
     }
 
-
     .clickable {
       cursor: pointer;
     }
-
 
     /* =========================
        SWITCH
@@ -623,7 +630,6 @@
       transition: 0.2s;
     }
 
-
     .switch span {
       display: block;
       width: 22px;
@@ -633,16 +639,17 @@
       transition: 0.2s;
     }
 
-
     .switch.active {
       background: var(--accent);
     }
 
-
-    .switch.active span {
+    [dir="ltr"] .switch.active span {
       transform: translateX(20px);
     }
 
+    [dir="rtl"] .switch.active span {
+      transform: translateX(-20px);
+    }
 
     /* =========================
        ABOUT
@@ -654,23 +661,19 @@
       color: var(--muted);
     }
 
-
     .about strong {
       color: var(--text);
       font-size: 13px;
     }
-
 
     .about p {
       margin: 5px 0;
       font-size: 12px;
     }
 
-
     .about small {
       font-size: 10px;
     }
-
 
     /* =========================
        TOAST
@@ -680,36 +683,26 @@
       position: fixed;
       left: 50%;
       bottom: 25px;
-      transform:
-        translateX(-50%)
-        translateY(20px);
-
+      transform: translateX(-50%) translateY(20px);
       background: var(--text);
       color: var(--accent-text);
-
       padding: 11px 15px;
       border-radius: 12px;
-
       font-size: 12px;
-
       opacity: 0;
       pointer-events: none;
-
       transition: 0.2s;
-
       z-index: 1000;
-
       white-space: nowrap;
+      max-width: calc(100vw - 30px);
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-
 
     .toast.show {
       opacity: 1;
-      transform:
-        translateX(-50%)
-        translateY(0);
+      transform: translateX(-50%) translateY(0);
     }
-
 
     /* =========================
        DARK MODE
@@ -726,47 +719,40 @@
       --shadow: none;
     }
 
-
     /* =========================
        MOBILE
     ========================== */
 
     @media (max-width: 420px) {
-
       .app {
-        padding:
-          16px
-          14px
-          30px;
+        padding: 16px 14px 30px;
       }
-
 
       .form-row {
         grid-template-columns: 1fr;
       }
 
-    }
+      .install-content {
+        align-items: flex-start;
+      }
 
+      .install-action {
+        padding-inline: 10px;
+      }
+    }
   </style>
 </head>
-
 
 <body>
 
   <div class="app">
 
-
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
+    <!-- HEADER -->
     <header class="topbar">
 
       <div class="brand">
 
-        <div class="brand-mark">
-          B
-        </div>
+        <div class="brand-mark">B</div>
 
         <div>
 
@@ -774,14 +760,16 @@
             BELTONE
           </div>
 
-          <div class="brand-tagline">
+          <div
+            id="brandTagline"
+            class="brand-tagline"
+          >
             Your day, in the right tone.
           </div>
 
         </div>
 
       </div>
-
 
       <button
         id="settingsBtn"
@@ -794,26 +782,51 @@
     </header>
 
 
+    <!-- HOME -->
+    <main id="homeView" class="view">
 
-    <!-- =====================================================
-         HOME
-    ====================================================== -->
-
-    <main
-      id="homeView"
-      class="view"
-    >
-
-
+      <!-- INSTALL CARD -->
       <section
-        id="nextReminderSection"
-        class="next-section"
+        id="installCard"
+        class="install-card hidden"
       >
 
-        <div class="section-label">
-          NEXT REMINDER
+        <div class="install-content">
+
+          <div class="install-icon">
+            B
+          </div>
+
+          <div class="install-text">
+
+            <strong id="installTitle">
+              Install Beltone
+            </strong>
+
+            <p id="installDescription">
+              Add Beltone to your device for quick access.
+            </p>
+
+          </div>
+
+          <button
+            id="installBtnHome"
+            class="install-action"
+          >
+            Install
+          </button>
+
         </div>
 
+      </section>
+
+
+      <!-- NEXT REMINDER -->
+      <section class="next-section">
+
+        <div class="section-label" data-i18n="nextReminder">
+          NEXT REMINDER
+        </div>
 
         <div
           id="nextReminderCard"
@@ -828,11 +841,11 @@
 
             <div>
 
-              <strong>
+              <strong data-i18n="noUpcoming">
                 No upcoming reminders
               </strong>
 
-              <p>
+              <p data-i18n="addFirstReminder">
                 Add your first reminder.
               </p>
 
@@ -845,12 +858,15 @@
       </section>
 
 
-
+      <!-- TODAY -->
       <section class="today-section">
 
         <div class="section-header">
 
-          <div class="section-label">
+          <div
+            class="section-label"
+            data-i18n="today"
+          >
             TODAY
           </div>
 
@@ -863,7 +879,6 @@
 
         </div>
 
-
         <div
           id="todayList"
           class="reminder-list"
@@ -872,34 +887,24 @@
       </section>
 
 
-
       <button
         id="addReminderBtn"
         class="primary-btn add-btn"
       >
-
-        <span>
-          ＋
+        <span>＋</span>
+        <span data-i18n="addReminder">
+          Add Reminder
         </span>
-
-        Add Reminder
-
       </button>
-
 
     </main>
 
 
-
-    <!-- =====================================================
-         NEW / EDIT REMINDER
-    ====================================================== -->
-
+    <!-- NEW / EDIT REMINDER -->
     <main
       id="reminderView"
       class="view hidden"
     >
-
 
       <div class="page-header">
 
@@ -910,14 +915,13 @@
           ←
         </button>
 
-
         <div>
 
           <h1 id="reminderPageTitle">
             New Reminder
           </h1>
 
-          <p>
+          <p data-i18n="createSimpleReminder">
             Create a simple reminder.
           </p>
 
@@ -926,23 +930,19 @@
       </div>
 
 
-
       <form
         id="reminderForm"
         class="form"
       >
-
 
         <input
           type="hidden"
           id="reminderId"
         />
 
-
-
         <label>
 
-          <span>
+          <span data-i18n="title">
             Title
           </span>
 
@@ -957,13 +957,11 @@
         </label>
 
 
-
         <div class="form-row">
-
 
           <label>
 
-            <span>
+            <span data-i18n="date">
               Date
             </span>
 
@@ -978,7 +976,7 @@
 
           <label>
 
-            <span>
+            <span data-i18n="time">
               Time
             </span>
 
@@ -990,23 +988,22 @@
 
           </label>
 
-
         </div>
-
 
 
         <div class="field-block">
 
-          <span class="field-title">
+          <span
+            class="field-title"
+            data-i18n="tone"
+          >
             Tone
           </span>
-
 
           <div
             id="toneOptions"
             class="tone-options"
           >
-
 
             <button
               type="button"
@@ -1020,11 +1017,11 @@
 
               <span>
 
-                <strong>
+                <strong data-tone-title="classic">
                   Classic
                 </strong>
 
-                <small>
+                <small data-tone-desc="classic">
                   Simple & clear
                 </small>
 
@@ -1035,7 +1032,6 @@
               </span>
 
             </button>
-
 
 
             <button
@@ -1050,11 +1046,11 @@
 
               <span>
 
-                <strong>
+                <strong data-tone-title="soft">
                   Soft
                 </strong>
 
-                <small>
+                <small data-tone-desc="soft">
                   Calm & gentle
                 </small>
 
@@ -1065,7 +1061,6 @@
               </span>
 
             </button>
-
 
 
             <button
@@ -1080,11 +1075,11 @@
 
               <span>
 
-                <strong>
+                <strong data-tone-title="bright">
                   Bright
                 </strong>
 
-                <small>
+                <small data-tone-desc="bright">
                   Positive & light
                 </small>
 
@@ -1095,7 +1090,6 @@
               </span>
 
             </button>
-
 
 
             <button
@@ -1110,11 +1104,11 @@
 
               <span>
 
-                <strong>
+                <strong data-tone-title="alert">
                   Alert
                 </strong>
 
-                <small>
+                <small data-tone-desc="alert">
                   Hard to miss
                 </small>
 
@@ -1126,22 +1120,21 @@
 
             </button>
 
-
           </div>
 
         </div>
 
 
-
         <div class="field-block">
 
-          <span class="field-title">
+          <span
+            class="field-title"
+            data-i18n="repeat"
+          >
             Repeat
           </span>
 
-
           <div class="repeat-options">
-
 
             <label class="radio-option">
 
@@ -1152,7 +1145,7 @@
                 checked
               />
 
-              <span>
+              <span data-i18n="never">
                 Never
               </span>
 
@@ -1167,24 +1160,24 @@
                 value="daily"
               />
 
-              <span>
+              <span data-i18n="daily">
                 Daily
               </span>
 
             </label>
-
 
           </div>
 
         </div>
 
 
-
         <button
           class="primary-btn"
           type="submit"
         >
-          Save Reminder
+          <span data-i18n="saveReminder">
+            Save Reminder
+          </span>
         </button>
 
 
@@ -1193,25 +1186,21 @@
           type="button"
           class="danger-btn hidden"
         >
-          Delete Reminder
+          <span data-i18n="deleteReminder">
+            Delete Reminder
+          </span>
         </button>
-
 
       </form>
 
     </main>
 
 
-
-    <!-- =====================================================
-         SETTINGS
-    ====================================================== -->
-
+    <!-- SETTINGS -->
     <main
       id="settingsView"
       class="view hidden"
     >
-
 
       <div class="page-header">
 
@@ -1222,14 +1211,13 @@
           ←
         </button>
 
-
         <div>
 
-          <h1>
+          <h1 data-i18n="settings">
             Settings
           </h1>
 
-          <p>
+          <p data-i18n="makeBeltoneWork">
             Make Beltone work your way.
           </p>
 
@@ -1238,36 +1226,31 @@
       </div>
 
 
-
       <section class="settings-list">
-
 
         <div class="setting-item">
 
           <div>
 
-            <strong>
+            <strong data-i18n="notifications">
               Notifications
             </strong>
 
-            <small>
+            <small data-i18n="allowNotifications">
               Allow Beltone to notify you.
             </small>
 
           </div>
 
-
           <button
             id="notificationToggle"
             class="switch"
+            aria-label="Notifications"
           >
-
             <span></span>
-
           </button>
 
         </div>
-
 
 
         <div
@@ -1277,33 +1260,30 @@
 
           <div>
 
-            <strong>
+            <strong data-i18n="defaultTone">
               Default tone
             </strong>
 
             <small id="defaultToneValue">
-              Classic
+              🔔 Classic
             </small>
 
           </div>
 
-          <span>
-            ›
-          </span>
+          <span>›</span>
 
         </div>
-
 
 
         <div class="setting-item">
 
           <div>
 
-            <strong>
+            <strong data-i18n="defaultSnooze">
               Default snooze
             </strong>
 
-            <small>
+            <small data-i18n="tenMinutes">
               10 minutes
             </small>
 
@@ -1312,63 +1292,63 @@
         </div>
 
 
-
         <div class="setting-item">
 
           <div>
 
-            <strong>
+            <strong data-i18n="darkMode">
               Dark mode
             </strong>
 
-            <small>
+            <small data-i18n="useDarker">
               Use a darker appearance.
             </small>
 
           </div>
 
-
           <button
             id="darkModeToggle"
             class="switch"
+            aria-label="Dark mode"
           >
-
             <span></span>
-
           </button>
 
         </div>
 
 
-
-        <div class="setting-item">
+        <div
+          id="languageSetting"
+          class="setting-item clickable"
+        >
 
           <div>
 
-            <strong>
+            <strong data-i18n="language">
               Language
             </strong>
 
-            <small>
+            <small id="languageValue">
               English
             </small>
 
           </div>
 
+          <span>›</span>
+
         </div>
 
 
-
         <button
-          id="installBtn"
+          id="installBtnSettings"
           class="secondary-btn hidden"
         >
-          Install Beltone
+          <span data-i18n="installBeltone">
+            Install Beltone
+          </span>
         </button>
 
-
       </section>
-
 
 
       <div class="about">
@@ -1377,367 +1357,741 @@
           Beltone.app
         </strong>
 
-        <p>
+        <p id="aboutTagline">
           Your day, in the right tone.
         </p>
 
         <small>
-          Version 1.0.0
+          Version 1.1.0
         </small>
 
       </div>
 
-
     </main>
-
 
   </div>
 
 
-
-  <!-- =====================================================
-       TOAST
-  ====================================================== -->
-
+  <!-- TOAST -->
   <div
     id="toast"
     class="toast"
   ></div>
 
 
-
-  <!-- =====================================================
-       JAVASCRIPT
-  ====================================================== -->
-
   <script>
+    /* =====================================================
+       BELTONE.APP
+       Local-first PWA
+       English + Arabic
+       IndexedDB storage
+    ====================================================== */
 
-    /* =========================================
-       BELTONE APP
-       Simple PWA Reminder App
-    ========================================== */
+    const DB_NAME = "beltone_local_first";
+    const DB_VERSION = 1;
+    const REMINDERS_STORE = "reminders";
+    const SETTINGS_STORE = "settings";
+    const SETTINGS_ID = "app_settings";
 
+    let db = null;
+    let reminders = [];
+    let settings = {
+      notifications: false,
+      defaultTone: "classic",
+      darkMode: false,
+      language: "en"
+    };
 
-    const STORAGE_KEY =
-      "beltone_reminders";
-
-    const SETTINGS_KEY =
-      "beltone_settings";
-
-
-    /* =========================================
-       STATE
-    ========================================== */
-
-    let reminders =
-      loadReminders();
-
-    let settings =
-      loadSettings();
-
-    let currentTone =
-      settings.defaultTone ||
-      "classic";
-
-    let deferredInstallPrompt =
-      null;
-
-
-
-    /* =========================================
-       DOM
-    ========================================== */
+    let currentTone = "classic";
+    let deferredInstallPrompt = null;
+    let toastTimer = null;
 
     const homeView =
-      document.getElementById(
-        "homeView"
-      );
+      document.getElementById("homeView");
 
     const reminderView =
-      document.getElementById(
-        "reminderView"
-      );
+      document.getElementById("reminderView");
 
     const settingsView =
-      document.getElementById(
-        "settingsView"
-      );
-
+      document.getElementById("settingsView");
 
     const addReminderBtn =
-      document.getElementById(
-        "addReminderBtn"
-      );
+      document.getElementById("addReminderBtn");
 
     const settingsBtn =
-      document.getElementById(
-        "settingsBtn"
-      );
-
+      document.getElementById("settingsBtn");
 
     const backFromReminder =
-      document.getElementById(
-        "backFromReminder"
-      );
+      document.getElementById("backFromReminder");
 
     const backFromSettings =
-      document.getElementById(
-        "backFromSettings"
-      );
-
+      document.getElementById("backFromSettings");
 
     const reminderForm =
-      document.getElementById(
-        "reminderForm"
-      );
-
+      document.getElementById("reminderForm");
 
     const reminderId =
-      document.getElementById(
-        "reminderId"
-      );
+      document.getElementById("reminderId");
 
     const titleInput =
-      document.getElementById(
-        "titleInput"
-      );
+      document.getElementById("titleInput");
 
     const dateInput =
-      document.getElementById(
-        "dateInput"
-      );
+      document.getElementById("dateInput");
 
     const timeInput =
-      document.getElementById(
-        "timeInput"
-      );
-
+      document.getElementById("timeInput");
 
     const reminderPageTitle =
-      document.getElementById(
-        "reminderPageTitle"
-      );
-
+      document.getElementById("reminderPageTitle");
 
     const deleteReminderBtn =
-      document.getElementById(
-        "deleteReminderBtn"
-      );
-
+      document.getElementById("deleteReminderBtn");
 
     const toneOptions =
-      document.querySelectorAll(
-        ".tone-option"
-      );
-
+      document.querySelectorAll(".tone-option");
 
     const todayList =
-      document.getElementById(
-        "todayList"
-      );
-
+      document.getElementById("todayList");
 
     const todayCount =
-      document.getElementById(
-        "todayCount"
-      );
-
+      document.getElementById("todayCount");
 
     const nextReminderCard =
-      document.getElementById(
-        "nextReminderCard"
-      );
-
+      document.getElementById("nextReminderCard");
 
     const notificationToggle =
-      document.getElementById(
-        "notificationToggle"
-      );
-
+      document.getElementById("notificationToggle");
 
     const darkModeToggle =
-      document.getElementById(
-        "darkModeToggle"
-      );
-
+      document.getElementById("darkModeToggle");
 
     const defaultToneValue =
-      document.getElementById(
-        "defaultToneValue"
-      );
+      document.getElementById("defaultToneValue");
 
+    const installCard =
+      document.getElementById("installCard");
 
-    const installBtn =
-      document.getElementById(
-        "installBtn"
-      );
+    const installBtnHome =
+      document.getElementById("installBtnHome");
 
+    const installBtnSettings =
+      document.getElementById("installBtnSettings");
+
+    const languageSetting =
+      document.getElementById("languageSetting");
+
+    const languageValue =
+      document.getElementById("languageValue");
 
     const toast =
-      document.getElementById(
-        "toast"
+      document.getElementById("toast");
+
+    /* =====================================================
+       TRANSLATIONS
+    ====================================================== */
+
+    const translations = {
+      en: {
+        tagline:
+          "Your day, in the right tone.",
+
+        nextReminder:
+          "NEXT REMINDER",
+
+        today:
+          "TODAY",
+
+        addReminder:
+          "Add Reminder",
+
+        noUpcoming:
+          "No upcoming reminders",
+
+        addFirstReminder:
+          "Add your first reminder.",
+
+        nothingToday:
+          "Nothing planned for today.",
+
+        createSimpleReminder:
+          "Create a simple reminder.",
+
+        newReminder:
+          "New Reminder",
+
+        editReminder:
+          "Edit Reminder",
+
+        title:
+          "Title",
+
+        date:
+          "Date",
+
+        time:
+          "Time",
+
+        tone:
+          "Tone",
+
+        repeat:
+          "Repeat",
+
+        never:
+          "Never",
+
+        daily:
+          "Daily",
+
+        saveReminder:
+          "Save Reminder",
+
+        deleteReminder:
+          "Delete Reminder",
+
+        settings:
+          "Settings",
+
+        makeBeltoneWork:
+          "Make Beltone work your way.",
+
+        notifications:
+          "Notifications",
+
+        allowNotifications:
+          "Allow Beltone to notify you.",
+
+        defaultTone:
+          "Default tone",
+
+        defaultSnooze:
+          "Default snooze",
+
+        tenMinutes:
+          "10 minutes",
+
+        darkMode:
+          "Dark mode",
+
+        useDarker:
+          "Use a darker appearance.",
+
+        language:
+          "Language",
+
+        installBeltone:
+          "Install Beltone",
+
+        installTitle:
+          "Install Beltone",
+
+        installDescription:
+          "Add Beltone to your device for quick access.",
+
+        install:
+          "Install",
+
+        installed:
+          "Beltone installed",
+
+        english:
+          "English",
+
+        arabic:
+          "العربية",
+
+        classic:
+          "Classic",
+
+        soft:
+          "Soft",
+
+        bright:
+          "Bright",
+
+        alert:
+          "Alert",
+
+        classicDesc:
+          "Simple & clear",
+
+        softDesc:
+          "Calm & gentle",
+
+        brightDesc:
+          "Positive & light",
+
+        alertDesc:
+          "Hard to miss",
+
+        done:
+          "Done",
+
+        snooze:
+          "Snooze 10m",
+
+        reminderSaved:
+          "Reminder saved",
+
+        reminderDeleted:
+          "Reminder deleted",
+
+        completed:
+          "Done ✓",
+
+        snoozed:
+          "Snoozed for 10 minutes",
+
+        notificationsUnsupported:
+          "Notifications are not supported.",
+
+        notificationsDenied:
+          "Notifications are blocked.",
+
+        notificationsEnabled:
+          "Notifications enabled",
+
+        notificationsDisabled:
+          "Notifications disabled",
+
+        defaultToneChanged:
+          "Default tone:",
+
+        dailyLabel:
+          "Daily",
+
+        timeToReminder:
+          "It's time.",
+
+        iosInstall:
+          "To install Beltone, use your browser's Share/Add to Home Screen option.",
+
+        nothing:
+          "Nothing planned for today."
+      },
+
+      ar: {
+        tagline:
+          "يومك، بالنغمة المناسبة.",
+
+        nextReminder:
+          "التذكير القادم",
+
+        today:
+          "اليوم",
+
+        addReminder:
+          "إضافة تذكير",
+
+        noUpcoming:
+          "لا توجد تذكيرات قادمة",
+
+        addFirstReminder:
+          "أضف أول تذكير لك.",
+
+        nothingToday:
+          "لا يوجد شيء مخطط له اليوم.",
+
+        createSimpleReminder:
+          "أنشئ تذكيرًا بسيطًا.",
+
+        newReminder:
+          "تذكير جديد",
+
+        editReminder:
+          "تعديل التذكير",
+
+        title:
+          "العنوان",
+
+        date:
+          "التاريخ",
+
+        time:
+          "الوقت",
+
+        tone:
+          "النغمة",
+
+        repeat:
+          "التكرار",
+
+        never:
+          "مرة واحدة",
+
+        daily:
+          "يوميًا",
+
+        saveReminder:
+          "حفظ التذكير",
+
+        deleteReminder:
+          "حذف التذكير",
+
+        settings:
+          "الإعدادات",
+
+        makeBeltoneWork:
+          "خلّي Beltone يشتغل بطريقتك.",
+
+        notifications:
+          "الإشعارات",
+
+        allowNotifications:
+          "السماح لـ Beltone بإرسال الإشعارات.",
+
+        defaultTone:
+          "النغمة الافتراضية",
+
+        defaultSnooze:
+          "التأجيل الافتراضي",
+
+        tenMinutes:
+          "10 دقائق",
+
+        darkMode:
+          "الوضع الداكن",
+
+        useDarker:
+          "استخدم مظهرًا داكنًا.",
+
+        language:
+          "اللغة",
+
+        installBeltone:
+          "تثبيت Beltone",
+
+        installTitle:
+          "نزّل Beltone",
+
+        installDescription:
+          "أضف Beltone إلى جهازك للوصول السريع.",
+
+        install:
+          "تثبيت",
+
+        installed:
+          "تم تثبيت Beltone",
+
+        english:
+          "English",
+
+        arabic:
+          "العربية",
+
+        classic:
+          "كلاسيك",
+
+        soft:
+          "هادئة",
+
+        bright:
+          "مشرقة",
+
+        alert:
+          "تنبيه",
+
+        classicDesc:
+          "بسيطة وواضحة",
+
+        softDesc:
+          "هادئة ولطيفة",
+
+        brightDesc:
+          "إيجابية وخفيفة",
+
+        alertDesc:
+          "يصعب تجاهلها",
+
+        done:
+          "تم",
+
+        snooze:
+          "تأجيل 10 دقائق",
+
+        reminderSaved:
+          "تم حفظ التذكير",
+
+        reminderDeleted:
+          "تم حذف التذكير",
+
+        completed:
+          "تم ✓",
+
+        snoozed:
+          "تم التأجيل لمدة 10 دقائق",
+
+        notificationsUnsupported:
+          "الإشعارات غير مدعومة.",
+
+        notificationsDenied:
+          "الإشعارات محظورة.",
+
+        notificationsEnabled:
+          "تم تشغيل الإشعارات",
+
+        notificationsDisabled:
+          "تم إيقاف الإشعارات",
+
+        defaultToneChanged:
+          "النغمة الافتراضية:",
+
+        dailyLabel:
+          "يوميًا",
+
+        timeToReminder:
+          "حان الوقت.",
+
+        iosInstall:
+          "لتثبيت Beltone استخدم خيار المشاركة ثم إضافة إلى الشاشة الرئيسية في المتصفح."
+      }
+    };
+
+    function t(key) {
+      return (
+        translations[settings.language]?.[key] ??
+        translations.en[key] ??
+        key
       );
+    }
 
+    /* =====================================================
+       INDEXEDDB
+    ====================================================== */
 
+    function openDatabase() {
+      return new Promise((resolve, reject) => {
+        if (!("indexedDB" in window)) {
+          reject(
+            new Error("IndexedDB is not supported.")
+          );
+          return;
+        }
 
-    /* =========================================
-       STORAGE
-    ========================================== */
+        const request =
+          indexedDB.open(
+            DB_NAME,
+            DB_VERSION
+          );
 
-    function loadReminders() {
+        request.onupgradeneeded = event => {
+          const database =
+            event.target.result;
 
-      try {
-
-        return (
-          JSON.parse(
-            localStorage.getItem(
-              STORAGE_KEY
+          if (
+            !database.objectStoreNames.contains(
+              REMINDERS_STORE
             )
-          ) || []
+          ) {
+            database.createObjectStore(
+              REMINDERS_STORE,
+              {
+                keyPath: "id"
+              }
+            );
+          }
+
+          if (
+            !database.objectStoreNames.contains(
+              SETTINGS_STORE
+            )
+          ) {
+            database.createObjectStore(
+              SETTINGS_STORE,
+              {
+                keyPath: "id"
+              }
+            );
+          }
+        };
+
+        request.onsuccess = event => {
+          resolve(event.target.result);
+        };
+
+        request.onerror = () => {
+          reject(request.error);
+        };
+      });
+    }
+
+    function dbGetAll(storeName) {
+      return new Promise((resolve, reject) => {
+        const transaction =
+          db.transaction(
+            storeName,
+            "readonly"
+          );
+
+        const store =
+          transaction.objectStore(
+            storeName
+          );
+
+        const request =
+          store.getAll();
+
+        request.onsuccess = () => {
+          resolve(request.result || []);
+        };
+
+        request.onerror = () => {
+          reject(request.error);
+        };
+      });
+    }
+
+    function dbPut(storeName, value) {
+      return new Promise((resolve, reject) => {
+        const transaction =
+          db.transaction(
+            storeName,
+            "readwrite"
+          );
+
+        transaction.oncomplete = () =>
+          resolve();
+
+        transaction.onerror = () =>
+          reject(transaction.error);
+
+        transaction.objectStore(
+          storeName
+        ).put(value);
+      });
+    }
+
+    function dbDelete(storeName, key) {
+      return new Promise((resolve, reject) => {
+        const transaction =
+          db.transaction(
+            storeName,
+            "readwrite"
+          );
+
+        transaction.oncomplete = () =>
+          resolve();
+
+        transaction.onerror = () =>
+          reject(transaction.error);
+
+        transaction.objectStore(
+          storeName
+        ).delete(key);
+      });
+    }
+
+    async function loadData() {
+      const storedReminders =
+        await dbGetAll(
+          REMINDERS_STORE
         );
 
-      } catch {
+      reminders =
+        storedReminders || [];
 
-        return [];
+      const storedSettings =
+        await dbGetAll(
+          SETTINGS_STORE
+        );
 
+      if (storedSettings.length) {
+        settings = {
+          ...settings,
+          ...storedSettings[0]
+        };
       }
-
     }
 
-
-    function saveReminders() {
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(
-          reminders
-        )
+    async function saveReminder(reminder) {
+      await dbPut(
+        REMINDERS_STORE,
+        reminder
       );
 
+      reminders =
+        reminders.filter(
+          item =>
+            item.id !== reminder.id
+        );
+
+      reminders.push(reminder);
     }
 
-
-    function loadSettings() {
-
-      try {
-
-        return {
-
-          notifications: false,
-
-          defaultTone:
-            "classic",
-
-          darkMode: false,
-
-          ...JSON.parse(
-            localStorage.getItem(
-              SETTINGS_KEY
-            )
-          )
-
-        };
-
-      } catch {
-
-        return {
-
-          notifications: false,
-
-          defaultTone:
-            "classic",
-
-          darkMode: false
-
-        };
-
-      }
-
-    }
-
-
-    function saveSettings() {
-
-      localStorage.setItem(
-        SETTINGS_KEY,
-        JSON.stringify(
-          settings
-        )
+    async function removeReminder(id) {
+      await dbDelete(
+        REMINDERS_STORE,
+        id
       );
 
+      reminders =
+        reminders.filter(
+          item =>
+            item.id !== id
+        );
     }
 
+    async function saveAppSettings() {
+      await dbPut(
+        SETTINGS_STORE,
+        {
+          ...settings,
+          id: SETTINGS_ID
+        }
+      );
+    }
 
-
-    /* =========================================
+    /* =====================================================
        UTILITIES
-    ========================================== */
+    ====================================================== */
 
     function todayString() {
-
       const now =
         new Date();
 
-
-      const year =
-        now.getFullYear();
-
-
-      const month =
+      return [
+        now.getFullYear(),
         String(
           now.getMonth() + 1
-        ).padStart(2, "0");
-
-
-      const day =
+        ).padStart(2, "0"),
         String(
           now.getDate()
-        ).padStart(2, "0");
-
-
-      return (
-        `${year}-${month}-${day}`
-      );
-
+        ).padStart(2, "0")
+      ].join("-");
     }
-
 
     function formatDate(
       dateString
     ) {
-
       const date =
         new Date(
           `${dateString}T00:00:00`
         );
 
-
       return date.toLocaleDateString(
-        undefined,
+        settings.language === "ar"
+          ? "ar"
+          : undefined,
         {
           weekday: "short",
           month: "short",
           day: "numeric"
         }
       );
-
     }
-
 
     function formatTime(
       timeString
     ) {
-
       const [
         hours,
         minutes
       ] =
         timeString.split(":");
 
-
       const date =
         new Date();
-
 
       date.setHours(
         Number(hours),
@@ -1746,83 +2100,217 @@
         0
       );
 
-
       return date.toLocaleTimeString(
-        undefined,
+        settings.language === "ar"
+          ? "ar"
+          : undefined,
         {
           hour: "numeric",
           minute: "2-digit"
         }
       );
-
     }
-
 
     function escapeHtml(
       value
     ) {
-
       return String(value)
-        .replaceAll(
-          "&",
-          "&amp;"
-        )
-        .replaceAll(
-          "<",
-          "&lt;"
-        )
-        .replaceAll(
-          ">",
-          "&gt;"
-        )
-        .replaceAll(
-          '"',
-          "&quot;"
-        )
-        .replaceAll(
-          "'",
-          "&#039;"
-        );
-
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
 
-
-    function showToast(
-      message
-    ) {
-
+    function showToast(message) {
       toast.textContent =
         message;
-
 
       toast.classList.add(
         "show"
       );
 
+      clearTimeout(
+        toastTimer
+      );
 
-      setTimeout(
-        () => {
-
+      toastTimer =
+        setTimeout(() => {
           toast.classList.remove(
             "show"
           );
-
-        },
-        2200
-      );
-
+        }, 2200);
     }
 
+    function makeId() {
+      if (
+        window.crypto &&
+        typeof crypto.randomUUID ===
+          "function"
+      ) {
+        return crypto.randomUUID();
+      }
 
+      return (
+        Date.now().toString(36) +
+        Math.random()
+          .toString(36)
+          .slice(2)
+      );
+    }
 
-    /* =========================================
+    function getDefaultTime() {
+      const now =
+        new Date();
+
+      let minutes =
+        now.getMinutes();
+
+      let rounded =
+        Math.ceil(
+          minutes / 5
+        ) * 5;
+
+      if (rounded >= 60) {
+        now.setHours(
+          now.getHours() + 1
+        );
+        rounded = 0;
+      }
+
+      return (
+        `${String(
+          now.getHours()
+        ).padStart(2, "0")}:${String(
+          rounded
+        ).padStart(2, "0")}`
+      );
+    }
+
+    /* =====================================================
+       LANGUAGE
+    ====================================================== */
+
+    function applyLanguage() {
+      const isArabic =
+        settings.language === "ar";
+
+      document.documentElement.lang =
+        isArabic
+          ? "ar"
+          : "en";
+
+      document.documentElement.dir =
+        isArabic
+          ? "rtl"
+          : "ltr";
+
+      document
+        .querySelectorAll(
+          "[data-i18n]"
+        )
+        .forEach(element => {
+          element.textContent =
+            t(
+              element.dataset.i18n
+            );
+        });
+
+      document.getElementById(
+        "brandTagline"
+      ).textContent =
+        t("tagline");
+
+      document.getElementById(
+        "aboutTagline"
+      ).textContent =
+        t("tagline");
+
+      document.getElementById(
+        "installTitle"
+      ).textContent =
+        t("installTitle");
+
+      document.getElementById(
+        "installDescription"
+      ).textContent =
+        t("installDescription");
+
+      document.getElementById(
+        "installBtnHome"
+      ).textContent =
+        t("install");
+
+      document.querySelectorAll(
+        "[data-tone-title]"
+      ).forEach(element => {
+        element.textContent =
+          t(
+            element.dataset.toneTitle
+          );
+      });
+
+      document.querySelectorAll(
+        "[data-tone-desc]"
+      ).forEach(element => {
+        const tone =
+          element.dataset.toneDesc;
+
+        element.textContent =
+          t(
+            `${tone}Desc`
+          );
+      });
+
+      languageValue.textContent =
+        settings.language === "ar"
+          ? t("arabic")
+          : t("english");
+
+      titleInput.placeholder =
+        settings.language === "ar"
+          ? "مثال: اتصل بأحمد"
+          : "e.g. Call Ahmed";
+
+      updatePageTitle();
+      updateSettingsUI();
+      renderHome();
+    }
+
+    function toggleLanguage() {
+      settings.language =
+        settings.language === "ar"
+          ? "en"
+          : "ar";
+
+      saveAppSettings();
+
+      applyLanguage();
+    }
+
+    function updatePageTitle() {
+      reminderPageTitle.textContent =
+        reminderId.value
+          ? t("editReminder")
+          : t("newReminder");
+    }
+
+    /* =====================================================
+       THEME
+    ====================================================== */
+
+    function applyTheme() {
+      document.body.classList.toggle(
+        "dark",
+        settings.darkMode
+      );
+    }
+
+    /* =====================================================
        NAVIGATION
-    ========================================== */
+    ====================================================== */
 
-    function showView(
-      view
-    ) {
-
+    function showView(view) {
       homeView.classList.add(
         "hidden"
       );
@@ -1835,280 +2323,264 @@
         "hidden"
       );
 
-
       view.classList.remove(
         "hidden"
       );
-
 
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
-
     }
-
 
     function openHome() {
-
       renderHome();
-
-      showView(
-        homeView
-      );
-
+      showView(homeView);
     }
-
 
     function openSettings() {
-
       updateSettingsUI();
-
-      showView(
-        settingsView
-      );
-
+      showView(settingsView);
     }
 
-
     function openNewReminder() {
-
       reminderForm.reset();
-
 
       reminderId.value =
         "";
 
-
       titleInput.value =
         "";
-
 
       dateInput.value =
         todayString();
 
-
       timeInput.value =
         getDefaultTime();
-
 
       currentTone =
         settings.defaultTone ||
         "classic";
 
-
       selectTone(
         currentTone
       );
 
-
-      reminderPageTitle.textContent =
-        "New Reminder";
-
+      updatePageTitle();
 
       deleteReminderBtn.classList.add(
         "hidden"
       );
 
-
       showView(
         reminderView
       );
-
     }
 
-
-    function openEditReminder(
-      id
-    ) {
-
+    function openEditReminder(id) {
       const reminder =
         reminders.find(
-          reminder =>
-            reminder.id === id
+          item =>
+            item.id === id
         );
-
 
       if (!reminder) {
         return;
       }
 
-
       reminderId.value =
         reminder.id;
-
 
       titleInput.value =
         reminder.title;
 
-
       dateInput.value =
         reminder.date;
-
 
       timeInput.value =
         reminder.time;
 
-
       currentTone =
-        reminder.tone;
-
+        reminder.tone ||
+        "classic";
 
       selectTone(
         currentTone
       );
 
-
       const repeatRadio =
         document.querySelector(
-          `input[name="repeat"][value="${reminder.repeat}"]`
+          `input[name="repeat"][value="${reminder.repeat || "never"}"]`
         );
-
 
       if (repeatRadio) {
         repeatRadio.checked =
           true;
       }
 
-
-      reminderPageTitle.textContent =
-        "Edit Reminder";
-
+      updatePageTitle();
 
       deleteReminderBtn.classList.remove(
         "hidden"
       );
 
-
       showView(
         reminderView
       );
-
     }
 
+    /* =====================================================
+       REMINDER DATE HELPERS
+    ====================================================== */
 
-    function getDefaultTime() {
+    function getReminderDateTime(
+      reminder
+    ) {
+      return new Date(
+        `${reminder.date}T${reminder.time}`
+      );
+    }
 
+    function getNextOccurrence(
+      reminder
+    ) {
       const now =
         new Date();
 
+      let target =
+        getReminderDateTime(
+          reminder
+        );
 
-      now.setMinutes(
-        Math.ceil(
-          now.getMinutes() / 5
-        ) * 5
-      );
+      if (
+        reminder.repeat !==
+        "daily"
+      ) {
+        return target;
+      }
 
+      while (
+        target < now
+      ) {
+        target.setDate(
+          target.getDate() + 1
+        );
+      }
 
-      return (
-        `${String(
-          now.getHours()
-        ).padStart(2, "0")}:${String(
-          now.getMinutes()
-        ).padStart(2, "0")}`
-      );
-
+      return target;
     }
 
+    function getOccurrenceDate(
+      reminder
+    ) {
+      const occurrence =
+        getNextOccurrence(
+          reminder
+        );
 
+      return [
+        occurrence.getFullYear(),
+        String(
+          occurrence.getMonth() + 1
+        ).padStart(2, "0"),
+        String(
+          occurrence.getDate()
+        ).padStart(2, "0")
+      ].join("-");
+    }
 
-    /* =========================================
+    /* =====================================================
        HOME
-    ========================================== */
+    ====================================================== */
 
     function renderHome() {
-
       const today =
         todayString();
 
-
       const todayReminders =
         reminders
+          .filter(reminder => {
+            if (
+              reminder.repeat ===
+              "daily"
+            ) {
+              return (
+                !reminder.completed &&
+                reminder.date <=
+                  today
+              );
+            }
 
-          .filter(
-            reminder =>
-              reminder.date === today &&
+            return (
+              reminder.date ===
+                today &&
               !reminder.completed
-          )
-
-          .sort(
-            (a, b) =>
-              a.time.localeCompare(
-                b.time
-              )
-          );
-
+            );
+          })
+          .sort((a, b) => {
+            return (
+              getNextOccurrence(a) -
+              getNextOccurrence(b)
+            );
+          });
 
       todayCount.textContent =
         todayReminders.length;
 
-
       if (
         !todayReminders.length
       ) {
-
         todayList.innerHTML = `
           <div class="empty-list">
-            Nothing planned for today.
+            ${escapeHtml(
+              t("nothingToday")
+            )}
           </div>
         `;
-
       } else {
-
         todayList.innerHTML =
           todayReminders
             .map(
               renderReminderItem
             )
             .join("");
-
       }
 
-
       renderNextReminder();
-
     }
-
 
     function renderReminderItem(
       reminder
     ) {
+      const dailyText =
+        reminder.repeat ===
+        "daily"
+          ? ` · ${escapeHtml(
+              t("dailyLabel")
+            )}`
+          : "";
 
       return `
-
         <div class="reminder-item">
 
           <div class="reminder-main">
 
             <div class="reminder-title">
-
               ${escapeHtml(
                 reminder.title
               )}
-
             </div>
 
-
             <div class="reminder-meta">
-
               ${formatTime(
                 reminder.time
               )}
-
-              ${
-                reminder.repeat ===
-                "daily"
-                  ? " · Daily"
-                  : ""
-              }
-
+              ${dailyText}
             </div>
 
           </div>
 
-
           <div class="reminder-actions">
-
 
             <button
               class="small-btn"
@@ -2118,7 +2590,6 @@
               ✏️
             </button>
 
-
             <button
               class="small-btn"
               onclick="completeReminder('${reminder.id}')"
@@ -2127,48 +2598,42 @@
               ✓
             </button>
 
-
           </div>
 
         </div>
-
       `;
-
     }
 
-
     function renderNextReminder() {
-
-      const now =
-        new Date();
-
-
-      const upcoming =
+      const candidates =
         reminders
-
           .filter(
             reminder =>
-              !reminder.completed &&
-              new Date(
-                `${reminder.date}T${reminder.time}`
-              ) >= now
+              !reminder.completed
           )
-
+          .map(reminder => ({
+            reminder,
+            occurrence:
+              getNextOccurrence(
+                reminder
+              )
+          }))
+          .filter(
+            item =>
+              item.occurrence >=
+              new Date()
+          )
           .sort(
             (a, b) =>
-              new Date(
-                `${a.date}T${a.time}`
-              ) -
-              new Date(
-                `${b.date}T${b.time}`
-              )
-          )[0];
+              a.occurrence -
+              b.occurrence
+          );
 
+      const next =
+        candidates[0];
 
-      if (!upcoming) {
-
+      if (!next) {
         nextReminderCard.innerHTML = `
-
           <div class="empty-next">
 
             <div class="empty-icon">
@@ -2178,95 +2643,94 @@
             <div>
 
               <strong>
-                No upcoming reminders
+                ${escapeHtml(
+                  t("noUpcoming")
+                )}
               </strong>
 
               <p>
-                Add your first reminder.
+                ${escapeHtml(
+                  t("addFirstReminder")
+                )}
               </p>
 
             </div>
 
           </div>
-
         `;
 
         return;
-
       }
 
+      const reminder =
+        next.reminder;
 
       nextReminderCard.innerHTML = `
-
         <div
-          onclick="openEditReminder('${upcoming.id}')"
+          onclick="openEditReminder('${reminder.id}')"
           style="cursor:pointer"
         >
 
           <div class="section-label">
-
-            ${formatDate(
-              upcoming.date
+            ${escapeHtml(
+              formatDate(
+                getOccurrenceDate(
+                  reminder
+                )
+              )
             )}
-
           </div>
-
 
           <div class="next-reminder-title">
-
             ${escapeHtml(
-              upcoming.title
+              reminder.title
             )}
-
           </div>
-
 
           <div class="next-reminder-time">
-
-            ${formatTime(
-              upcoming.time
+            ${escapeHtml(
+              formatTime(
+                reminder.time
+              )
             )}
-
           </div>
 
-
           <div class="next-reminder-tone">
-
-            ${getToneLabel(
-              upcoming.tone
+            ${escapeHtml(
+              getToneLabel(
+                reminder.tone
+              )
             )}
-
           </div>
 
         </div>
-
       `;
-
     }
 
-
-
-    /* =========================================
-       SAVE / EDIT REMINDERS
-    ========================================== */
+    /* =====================================================
+       SAVE / DELETE REMINDERS
+    ====================================================== */
 
     reminderForm.addEventListener(
       "submit",
-      event => {
-
+      async event => {
         event.preventDefault();
 
+        const title =
+          titleInput.value.trim();
+
+        if (!title) {
+          return;
+        }
 
         const id =
           reminderId.value ||
-          crypto.randomUUID();
-
+          makeId();
 
         const repeat =
           document.querySelector(
             'input[name="repeat"]:checked'
           ).value;
-
 
         const existing =
           reminders.find(
@@ -2274,447 +2738,355 @@
               reminder.id === id
           );
 
-
         const reminder = {
-
           id,
-
-          title:
-            titleInput.value.trim(),
-
+          title,
           date:
             dateInput.value,
-
           time:
             timeInput.value,
-
           tone:
             currentTone,
-
           repeat,
-
           completed:
             existing
               ? existing.completed
               : false,
-
           lastNotified:
             existing
               ? existing.lastNotified
               : null
-
         };
 
-
-        if (existing) {
-
-          reminders =
-            reminders.map(
-              item =>
-                item.id === id
-                  ? reminder
-                  : item
-            );
-
-        } else {
-
-          reminders.push(
-            reminder
-          );
-
-        }
-
-
-        saveReminders();
-
-
-        showToast(
-          "Reminder saved"
+        await saveReminder(
+          reminder
         );
 
+        showToast(
+          t("reminderSaved")
+        );
 
         openHome();
-
       }
     );
 
-
-
-    function completeReminder(
+    async function completeReminder(
       id
     ) {
-
-      reminders =
-        reminders.map(
-          reminder =>
-            reminder.id === id
-              ? {
-                  ...reminder,
-                  completed: true
-                }
-              : reminder
+      const reminder =
+        reminders.find(
+          item =>
+            item.id === id
         );
 
+      if (!reminder) {
+        return;
+      }
 
-      saveReminders();
+      if (
+        reminder.repeat ===
+        "daily"
+      ) {
+        reminder.lastNotified =
+          todayString();
 
+        await saveReminder(
+          reminder
+        );
+      } else {
+        reminder.completed =
+          true;
+
+        await saveReminder(
+          reminder
+        );
+      }
 
       renderHome();
 
-
       showToast(
-        "Done ✓"
+        t("completed")
       );
-
     }
 
-
-    function deleteCurrentReminder() {
-
+    async function deleteCurrentReminder() {
       const id =
         reminderId.value;
-
 
       if (!id) {
         return;
       }
 
-
-      reminders =
-        reminders.filter(
-          reminder =>
-            reminder.id !== id
-        );
-
-
-      saveReminders();
-
-
-      showToast(
-        "Reminder deleted"
+      await removeReminder(
+        id
       );
 
+      showToast(
+        t("reminderDeleted")
+      );
 
       openHome();
-
     }
-
 
     deleteReminderBtn.addEventListener(
       "click",
       deleteCurrentReminder
     );
 
-
-
-    /* =========================================
+    /* =====================================================
        TONES
-    ========================================== */
+    ====================================================== */
 
     function getToneLabel(
       tone
     ) {
-
-      const labels = {
-
-        classic:
-          "🔔 Classic",
-
-        soft:
-          "🌿 Soft",
-
-        bright:
-          "✨ Bright",
-
-        alert:
-          "🚨 Alert"
-
+      const icons = {
+        classic: "🔔",
+        soft: "🌿",
+        bright: "✨",
+        alert: "🚨"
       };
 
-
-      return (
-        labels[tone] ||
-        labels.classic
-      );
-
+      return `${
+        icons[tone] ||
+        icons.classic
+      } ${
+        t(
+          tone in translations.en
+            ? tone
+            : "classic"
+        )
+      }`;
     }
-
 
     function selectTone(
       tone
     ) {
-
       currentTone =
         tone;
 
-
       toneOptions.forEach(
         option => {
-
           option.classList.toggle(
             "selected",
             option.dataset.tone ===
               tone
           );
-
         }
       );
-
     }
-
 
     toneOptions.forEach(
       option => {
-
         option.addEventListener(
           "click",
           () => {
-
             selectTone(
               option.dataset.tone
             );
 
-
             playTone(
               option.dataset.tone
             );
-
           }
         );
-
       }
     );
 
+    /* =====================================================
+       WEB AUDIO
+    ====================================================== */
 
-
-    /* =========================================
-       WEB AUDIO TONES
-    ========================================== */
-
-    function playTone(
-      type
-    ) {
-
+    function playTone(type) {
       const AudioContext =
         window.AudioContext ||
         window.webkitAudioContext;
-
 
       if (!AudioContext) {
         return;
       }
 
-
-      const audio =
-        new AudioContext();
-
-
       const frequencies = {
-
-        classic:
-          [660, 880],
-
-        soft:
-          [440, 554],
-
-        bright:
-          [660, 990, 1320],
-
-        alert:
-          [880, 440, 880]
-
+        classic: [660, 880],
+        soft: [440, 554],
+        bright: [660, 990, 1320],
+        alert: [880, 440, 880]
       };
-
 
       const notes =
         frequencies[type] ||
         frequencies.classic;
 
+      const audio =
+        new AudioContext();
 
       notes.forEach(
         (
           frequency,
           index
         ) => {
-
           const oscillator =
             audio.createOscillator();
-
 
           const gain =
             audio.createGain();
 
+          const start =
+            audio.currentTime +
+            index * 0.18;
 
           oscillator.frequency.value =
             frequency;
 
-
           oscillator.type =
             "sine";
 
-
           gain.gain.setValueAtTime(
             0.0001,
-            audio.currentTime +
-              index * 0.18
+            start
           );
-
 
           gain.gain.exponentialRampToValueAtTime(
             0.18,
-            audio.currentTime +
-              index * 0.18 +
-              0.02
+            start + 0.02
           );
-
 
           gain.gain.exponentialRampToValueAtTime(
             0.0001,
-            audio.currentTime +
-              index * 0.18 +
-              0.16
+            start + 0.16
           );
-
 
           oscillator.connect(
             gain
           );
 
-
           gain.connect(
             audio.destination
           );
 
-
           oscillator.start(
-            audio.currentTime +
-              index * 0.18
+            start
           );
-
 
           oscillator.stop(
-            audio.currentTime +
-              index * 0.18 +
-              0.18
+            start + 0.18
           );
-
         }
       );
 
+      setTimeout(() => {
+        audio.close().catch(() => {});
+      }, 1000);
     }
 
-
-
-    /* =========================================
+    /* =====================================================
        SETTINGS
-    ========================================== */
+    ====================================================== */
 
     function updateSettingsUI() {
-
       notificationToggle.classList.toggle(
         "active",
         settings.notifications
       );
-
 
       darkModeToggle.classList.toggle(
         "active",
         settings.darkMode
       );
 
-
       defaultToneValue.textContent =
         getToneLabel(
           settings.defaultTone
         );
 
+      languageValue.textContent =
+        settings.language === "ar"
+          ? t("arabic")
+          : t("english");
     }
-
 
     notificationToggle.addEventListener(
       "click",
       async () => {
-
         if (
-          !(
-            "Notification" in
-            window
-          )
+          !("Notification" in window)
         ) {
-
           showToast(
-            "Notifications are not supported."
+            t(
+              "notificationsUnsupported"
+            )
           );
 
           return;
-
         }
 
+        if (
+          settings.notifications
+        ) {
+          settings.notifications =
+            false;
+
+          await saveAppSettings();
+
+          updateSettingsUI();
+
+          showToast(
+            t(
+              "notificationsDisabled"
+            )
+          );
+
+          return;
+        }
 
         if (
           Notification.permission ===
-          "granted"
+          "denied"
         ) {
+          showToast(
+            t(
+              "notificationsDenied"
+            )
+          );
 
-          settings.notifications =
-            !settings.notifications;
-
-        } else {
-
-          const permission =
-            await Notification.requestPermission();
-
-
-          settings.notifications =
-            permission ===
-            "granted";
-
+          return;
         }
 
+        const permission =
+          await Notification.requestPermission();
 
-        saveSettings();
+        settings.notifications =
+          permission ===
+          "granted";
 
+        await saveAppSettings();
 
         updateSettingsUI();
 
+        showToast(
+          settings.notifications
+            ? t(
+                "notificationsEnabled"
+              )
+            : t(
+                "notificationsDenied"
+              )
+        );
       }
     );
-
 
     darkModeToggle.addEventListener(
       "click",
-      () => {
-
+      async () => {
         settings.darkMode =
           !settings.darkMode;
 
-
-        saveSettings();
-
+        await saveAppSettings();
 
         applyTheme();
-
-
         updateSettingsUI();
-
       }
     );
-
-
-    function applyTheme() {
-
-      document.body.classList.toggle(
-        "dark",
-        settings.darkMode
-      );
-
-    }
-
-
-
-    /* =========================================
-       DEFAULT TONE
-    ========================================== */
 
     document
       .getElementById(
@@ -2722,26 +3094,18 @@
       )
       .addEventListener(
         "click",
-        () => {
-
+        async () => {
           const tones = [
-
             "classic",
-
             "soft",
-
             "bright",
-
             "alert"
-
           ];
-
 
           const currentIndex =
             tones.indexOf(
               settings.defaultTone
             );
-
 
           settings.defaultTone =
             tones[
@@ -2749,646 +3113,602 @@
                 tones.length
             ];
 
-
-          saveSettings();
-
+          await saveAppSettings();
 
           updateSettingsUI();
 
-
           showToast(
-            `Default tone: ${getToneLabel(
+            `${t(
+              "defaultToneChanged"
+            )} ${getToneLabel(
               settings.defaultTone
             )}`
           );
-
         }
       );
 
+    languageSetting.addEventListener(
+      "click",
+      toggleLanguage
+    );
 
-
-    /* =========================================
-       NOTIFICATION SCHEDULER
-    ========================================== */
+    /* =====================================================
+       NOTIFICATIONS
+    ====================================================== */
 
     async function checkReminders() {
-
       if (
         !settings.notifications
       ) {
         return;
       }
 
-
       if (
-        !(
-          "Notification" in
-          window
-        ) ||
-        Notification.permission !==
-          "granted"
+        !("Notification" in window)
       ) {
-
         return;
-
       }
 
+      if (
+        Notification.permission !==
+        "granted"
+      ) {
+        return;
+      }
 
       const now =
         new Date();
 
-
-      const today =
-        todayString();
-
-
       for (
-        const reminder of
-          reminders
+        const reminder of reminders
       ) {
-
         if (
           reminder.completed
         ) {
-
           continue;
-
         }
 
+        const target =
+          getNextOccurrence(
+            reminder
+          );
 
-        const [
-          hours,
-          minutes
-        ] =
-          reminder.time
-            .split(":")
-            .map(Number);
+        const difference =
+          now.getTime() -
+          target.getTime();
 
-
-        let shouldNotify =
-          false;
-
-
-        if (
+        const alreadyNotified =
           reminder.repeat ===
           "daily"
-        ) {
-
-          if (
-
-            reminder.date <=
-              today &&
-
-            reminder.lastNotified !==
-              today &&
-
-            now.getHours() ===
-              hours &&
-
-            now.getMinutes() ===
-              minutes
-
-          ) {
-
-            shouldNotify =
-              true;
-
-          }
-
-        } else {
-
-          const target =
-            new Date(
-              `${reminder.date}T${reminder.time}`
-            );
-
-
-          const difference =
-            Math.abs(
-              now.getTime() -
-              target.getTime()
-            );
-
-
-          if (
-
-            difference <=
-              60000 &&
-
-            !reminder.lastNotified
-
-          ) {
-
-            shouldNotify =
-              true;
-
-          }
-
-        }
-
+            ? reminder.lastNotified ===
+              todayString()
+            : Boolean(
+                reminder.lastNotified
+              );
 
         if (
-          shouldNotify
+          difference >= 0 &&
+          difference <= 60000 &&
+          !alreadyNotified
         ) {
-
           await sendReminderNotification(
             reminder
           );
 
-
-          reminder.lastNotified =
+          if (
             reminder.repeat ===
             "daily"
+          ) {
+            reminder.lastNotified =
+              todayString();
+          } else {
+            reminder.lastNotified =
+              new Date().toISOString();
+          }
 
-              ? today
-
-              : new Date()
-                  .toISOString();
-
-
-          saveReminders();
-
+          await saveReminder(
+            reminder
+          );
 
           renderHome();
-
         }
-
       }
-
     }
-
-
 
     async function sendReminderNotification(
       reminder
     ) {
-
       playTone(
         reminder.tone
       );
 
-
       try {
-
-        const registration =
-          await navigator
-            .serviceWorker
-            .ready;
-
-
-        await registration.showNotification(
-          `🔔 Beltone — ${reminder.title}`,
-          {
-
-            body:
-              "It's time.",
-
-            icon:
-              "./icons/icon.svg",
-
-            badge:
-              "./icons/icon.svg",
-
-            tag:
-              `beltone-${reminder.id}`,
-
-            data: {
-
-              id:
-                reminder.id
-
-            },
-
-            actions: [
-
-              {
-                action:
-                  "done",
-
-                title:
-                  "Done"
-              },
-
-              {
-                action:
-                  "snooze",
-
-                title:
-                  "Snooze 10m"
-              }
-
-            ]
-
-          }
-        );
-
-
-      } catch {
-
         if (
-          Notification.permission ===
-          "granted"
+          "serviceWorker" in
+          navigator
         ) {
+          const registration =
+            await navigator
+              .serviceWorker
+              .ready;
 
-          new Notification(
+          await registration.showNotification(
             `🔔 Beltone — ${reminder.title}`,
             {
               body:
-                "It's time."
+                t(
+                  "timeToReminder"
+                ),
+
+              icon:
+                "./icons/icon.svg",
+
+              badge:
+                "./icons/icon.svg",
+
+              tag:
+                `beltone-${reminder.id}`,
+
+              data: {
+                id:
+                  reminder.id
+              },
+
+              actions: [
+                {
+                  action:
+                    "done",
+
+                  title:
+                    t("done")
+                },
+                {
+                  action:
+                    "snooze",
+
+                  title:
+                    t("snooze")
+                }
+              ]
             }
           );
 
+          return;
         }
-
+      } catch {
+        /* fallback below */
       }
 
-    }
-
-
-
-    /* =========================================
-       SERVICE WORKER MESSAGES
-    ========================================== */
-
-    if (
-      "serviceWorker" in
-      navigator
-    ) {
-
-      navigator.serviceWorker
-        .addEventListener(
-          "message",
-          event => {
-
-            const data =
-              event.data;
-
-
-            if (!data) {
-              return;
-            }
-
-
-            if (
-              data.type ===
-                "DONE" &&
-              data.id
-            ) {
-
-              completeReminder(
-                data.id
-              );
-
-            }
-
-
-            if (
-              data.type ===
-                "SNOOZE" &&
-              data.id
-            ) {
-
-              snoozeReminder(
-                data.id
-              );
-
-            }
-
+      try {
+        new Notification(
+          `🔔 Beltone — ${reminder.title}`,
+          {
+            body:
+              t(
+                "timeToReminder"
+              )
           }
         );
-
+      } catch {
+        /* ignored */
+      }
     }
 
+    /* =====================================================
+       SNOOZE
+    ====================================================== */
 
-
-    function snoozeReminder(
+    async function snoozeReminder(
       id
     ) {
-
       const reminder =
         reminders.find(
           item =>
             item.id === id
         );
 
-
       if (!reminder) {
         return;
       }
 
-
       const now =
         new Date();
 
-
       now.setMinutes(
-        now.getMinutes() +
-          10
+        now.getMinutes() + 10
       );
 
-
-      const date =
+      reminder.date =
         `${now.getFullYear()}-${String(
           now.getMonth() + 1
-        ).padStart(2, "0")}-${String(
+        ).padStart(
+          2,
+          "0"
+        )}-${String(
           now.getDate()
-        ).padStart(2, "0")}`;
-
-
-      const time =
-        `${String(
-          now.getHours()
-        ).padStart(2, "0")}:${String(
-          now.getMinutes()
-        ).padStart(2, "0")}`;
-
-
-      reminder.date =
-        date;
-
+        ).padStart(
+          2,
+          "0"
+        )}`;
 
       reminder.time =
-        time;
-
+        `${String(
+          now.getHours()
+        ).padStart(
+          2,
+          "0"
+        )}:${String(
+          now.getMinutes()
+        ).padStart(
+          2,
+          "0"
+        )}`;
 
       reminder.lastNotified =
         null;
 
+      reminder.completed =
+        false;
 
-      saveReminders();
-
+      await saveReminder(
+        reminder
+      );
 
       renderHome();
 
-
       showToast(
-        "Snoozed for 10 minutes"
+        t("snoozed")
       );
-
     }
 
-
-
-    /* =========================================
-       PWA INSTALL
-    ========================================== */
-
-    window.addEventListener(
-      "beforeinstallprompt",
-      event => {
-
-        event.preventDefault();
-
-
-        deferredInstallPrompt =
-          event;
-
-
-        installBtn.classList.remove(
-          "hidden"
-        );
-
-      }
-    );
-
-
-    installBtn.addEventListener(
-      "click",
-      async () => {
-
-        if (
-          !deferredInstallPrompt
-        ) {
-
-          return;
-
-        }
-
-
-        deferredInstallPrompt.prompt();
-
-
-        const result =
-          await deferredInstallPrompt
-            .userChoice;
-
-
-        if (
-          result.outcome ===
-          "accepted"
-        ) {
-
-          showToast(
-            "Beltone installed"
-          );
-
-        }
-
-
-        deferredInstallPrompt =
-          null;
-
-
-        installBtn.classList.add(
-          "hidden"
-        );
-
-      }
-    );
-
-
-
-    /* =========================================
-       SERVICE WORKER REGISTRATION
-    ========================================== */
+    /* =====================================================
+       SERVICE WORKER MESSAGE
+    ====================================================== */
 
     if (
       "serviceWorker" in
       navigator
     ) {
+      navigator.serviceWorker.addEventListener(
+        "message",
+        event => {
+          const data =
+            event.data;
 
+          if (!data) {
+            return;
+          }
+
+          if (
+            data.type ===
+              "DONE" &&
+            data.id
+          ) {
+            completeReminder(
+              data.id
+            );
+          }
+
+          if (
+            data.type ===
+              "SNOOZE" &&
+            data.id
+          ) {
+            snoozeReminder(
+              data.id
+            );
+          }
+        }
+      );
+    }
+
+    /* =====================================================
+       PWA INSTALL
+    ====================================================== */
+
+    function isStandalone() {
+      return (
+        window.matchMedia &&
+        window.matchMedia(
+          "(display-mode: standalone)"
+        ).matches
+      ) || window.navigator.standalone === true;
+    }
+
+    function showInstallUI() {
+      if (isStandalone()) {
+        installCard.classList.add(
+          "hidden"
+        );
+
+        installBtnSettings.classList.add(
+          "hidden"
+        );
+
+        return;
+      }
+
+      installCard.classList.remove(
+        "hidden"
+      );
+
+      installBtnSettings.classList.remove(
+        "hidden"
+      );
+
+      updateInstallText();
+    }
+
+    function updateInstallText() {
+      document.getElementById(
+        "installTitle"
+      ).textContent =
+        t("installTitle");
+
+      document.getElementById(
+        "installDescription"
+      ).textContent =
+        deferredInstallPrompt
+          ? t(
+              "installDescription"
+            )
+          : (
+              /iphone|ipad|ipod/i.test(
+                navigator.userAgent
+              )
+                ? t("iosInstall")
+                : t(
+                    "installDescription"
+                  )
+            );
+
+      installBtnHome.textContent =
+        t("install");
+
+      installBtnSettings.textContent =
+        t("installBeltone");
+    }
+
+    async function installBeltone() {
+      if (!deferredInstallPrompt) {
+        showToast(
+          /iphone|ipad|ipod/i.test(
+            navigator.userAgent
+          )
+            ? t("iosInstall")
+            : t(
+                "installDescription"
+              )
+        );
+
+        return;
+      }
+
+      deferredInstallPrompt.prompt();
+
+      const result =
+        await deferredInstallPrompt
+          .userChoice;
+
+      if (
+        result.outcome ===
+        "accepted"
+      ) {
+        showToast(
+          t("installed")
+        );
+      }
+
+      deferredInstallPrompt =
+        null;
+
+      showInstallUI();
+    }
+
+    window.addEventListener(
+      "beforeinstallprompt",
+      event => {
+        event.preventDefault();
+
+        deferredInstallPrompt =
+          event;
+
+        showInstallUI();
+      }
+    );
+
+    window.addEventListener(
+      "appinstalled",
+      () => {
+        deferredInstallPrompt =
+          null;
+
+        showInstallUI();
+
+        showToast(
+          t("installed")
+        );
+      }
+    );
+
+    installBtnHome.addEventListener(
+      "click",
+      installBeltone
+    );
+
+    installBtnSettings.addEventListener(
+      "click",
+      installBeltone
+    );
+
+    /* =====================================================
+       SERVICE WORKER
+    ====================================================== */
+
+    if (
+      "serviceWorker" in
+      navigator
+    ) {
       window.addEventListener(
         "load",
         () => {
-
           navigator.serviceWorker
             .register(
               "./sw.js"
             )
-            .then(
-              () => {
-
-                console.log(
-                  "Beltone service worker registered."
-                );
-
-              }
-            )
-            .catch(
-              error => {
-
-                console.error(
-                  "Service worker error:",
-                  error
-                );
-
-              }
-            );
-
+            .then(() => {
+              console.log(
+                "Beltone service worker registered."
+              );
+            })
+            .catch(error => {
+              console.error(
+                "Service worker error:",
+                error
+              );
+            });
         }
       );
-
     }
 
-
-
-    /* =========================================
+    /* =====================================================
        URL ACTIONS
-    ========================================== */
+    ====================================================== */
 
     function handleUrlAction() {
-
       const params =
         new URLSearchParams(
           window.location.search
         );
 
-
       const action =
-        params.get(
-          "action"
-        );
-
+        params.get("action");
 
       const id =
-        params.get(
-          "id"
-        );
-
+        params.get("id");
 
       if (
         !action ||
         !id
       ) {
-
         return;
-
       }
 
+      setTimeout(() => {
+        if (
+          action ===
+          "snooze"
+        ) {
+          snoozeReminder(id);
+        }
 
-      if (
-        action ===
-        "snooze"
-      ) {
-
-        setTimeout(
-          () => {
-
-            snoozeReminder(
-              id
-            );
-
-          },
-          500
-        );
-
-      }
-
-
-      if (
-        action ===
-        "done"
-      ) {
-
-        setTimeout(
-          () => {
-
-            completeReminder(
-              id
-            );
-
-          },
-          500
-        );
-
-      }
-
+        if (
+          action ===
+          "done"
+        ) {
+          completeReminder(id);
+        }
+      }, 500);
 
       history.replaceState(
         {},
         "",
         window.location.pathname
       );
-
     }
 
-
-
-    /* =========================================
+    /* =====================================================
        EVENTS
-    ========================================== */
+    ====================================================== */
 
     addReminderBtn.addEventListener(
       "click",
       openNewReminder
     );
 
-
     settingsBtn.addEventListener(
       "click",
       openSettings
     );
-
 
     backFromReminder.addEventListener(
       "click",
       openHome
     );
 
-
     backFromSettings.addEventListener(
       "click",
       openHome
     );
 
-
-
-    /* =========================================
+    /* =====================================================
        INITIALIZATION
-    ========================================== */
+    ====================================================== */
 
-    applyTheme();
+    async function init() {
+      try {
+        db =
+          await openDatabase();
 
-    updateSettingsUI();
+        await loadData();
 
-    renderHome();
+        applyTheme();
 
-    handleUrlAction();
+        applyLanguage();
 
+        updateSettingsUI();
+
+        renderHome();
+
+        showInstallUI();
+
+        handleUrlAction();
+
+        setInterval(
+          checkReminders,
+          15000
+        );
+
+        await checkReminders();
+
+      } catch (error) {
+        console.error(
+          "Beltone initialization failed:",
+          error
+        );
+
+        showToast(
+          "Beltone could not initialize storage."
+        );
+      }
+    }
+
+    init();
 
     /*
-      Check every 15 seconds.
+      LOCAL-FIRST
+
+      All reminders and settings are stored
+      locally inside IndexedDB.
+
+      No account.
+      No login.
+      No backend.
+      No database server.
 
       IMPORTANT:
-      Browser limitations mean that this
-      scheduler works reliably while the
-      Beltone page/PWA is running.
 
-      A true notification scheduler while
-      the app is completely closed requires
-      Push API + backend/server.
+      Browser/PWA limitations mean the
+      current scheduler is reliable while
+      Beltone is running.
+
+      True scheduled notifications while
+      the app is completely closed require
+      a platform/background notification
+      mechanism such as Push API + backend,
+      or native platform scheduling.
     */
-
-    setInterval(
-      checkReminders,
-      15000
-    );
-
-
-    checkReminders();
-
   </script>
 
 </body>
 </html>
-```
