@@ -1,0 +1,3394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+
+  <meta name="theme-color" content="#111111" />
+
+  <meta
+    name="description"
+    content="Beltone — Your day, in the right tone."
+  />
+
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icons/icon.svg" />
+
+  <title>Beltone — Your day, in the right tone.</title>
+
+
+  <!-- =====================================================
+       CSS
+  ====================================================== -->
+
+  <style>
+
+    :root {
+      --bg: #f5f5f5;
+      --card: #ffffff;
+      --text: #111111;
+      --muted: #777777;
+      --border: #e5e5e5;
+      --accent: #111111;
+      --accent-text: #ffffff;
+      --danger: #d64545;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    }
+
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+
+    body {
+      min-height: 100vh;
+    }
+
+
+    button,
+    input {
+      font: inherit;
+    }
+
+
+    button {
+      cursor: pointer;
+    }
+
+
+    .app {
+      width: 100%;
+      max-width: 620px;
+      margin: auto;
+      min-height: 100vh;
+      padding: 20px 18px 40px;
+    }
+
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 34px;
+    }
+
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: var(--accent);
+      color: var(--accent-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 21px;
+    }
+
+
+    .brand-name {
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      font-size: 15px;
+    }
+
+
+    .brand-tagline {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 13px;
+      font-size: 18px;
+    }
+
+
+    /* =========================
+       VIEWS
+    ========================== */
+
+    .view {
+      animation: fadeIn 0.18s ease;
+    }
+
+
+    .hidden {
+      display: none !important;
+    }
+
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    /* =========================
+       SECTIONS
+    ========================== */
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
+
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+
+    .count {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+
+    /* =========================
+       NEXT CARD
+    ========================== */
+
+    .next-section {
+      margin-bottom: 30px;
+    }
+
+
+    .next-card {
+      margin-top: 10px;
+      background: var(--card);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+
+    .empty-next {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+
+    .empty-next strong {
+      font-size: 15px;
+    }
+
+
+    .empty-next p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+
+    .next-reminder-title {
+      font-size: 22px;
+      font-weight: 750;
+      margin: 5px 0;
+    }
+
+
+    .next-reminder-time {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+
+    .next-reminder-tone {
+      display: inline-flex;
+      margin-top: 14px;
+      padding: 7px 10px;
+      border-radius: 9px;
+      background: var(--bg);
+      font-size: 12px;
+    }
+
+
+    /* =========================
+       REMINDERS
+    ========================== */
+
+    .reminder-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+
+    .reminder-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+
+    .reminder-main {
+      min-width: 0;
+    }
+
+
+    .reminder-title {
+      font-weight: 700;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+
+    .reminder-meta {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+
+    .reminder-actions {
+      display: flex;
+      gap: 5px;
+    }
+
+
+    .small-btn {
+      border: 0;
+      background: var(--bg);
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+    }
+
+
+    .empty-list {
+      padding: 24px 10px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+
+    /* =========================
+       BUTTONS
+    ========================== */
+
+    .primary-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 15px;
+      padding: 15px 18px;
+      background: var(--accent);
+      color: var(--accent-text);
+      font-weight: 750;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+
+    .primary-btn:active {
+      transform: scale(0.98);
+    }
+
+
+    .add-btn {
+      font-size: 15px;
+    }
+
+
+    .secondary-btn {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      background: var(--card);
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+
+    .danger-btn {
+      width: 100%;
+      border: 1px solid #f0cccc;
+      border-radius: 14px;
+      padding: 14px;
+      background: transparent;
+      color: var(--danger);
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+
+    /* =========================
+       PAGE HEADER
+    ========================== */
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+
+    .page-header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+
+    .page-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+
+    .back-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 12px;
+      font-size: 18px;
+    }
+
+
+    /* =========================
+       FORM
+    ========================== */
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+
+    .form label {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+
+    .form label > span,
+    .field-title {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+
+    .form input[type="text"],
+    .form input[type="date"],
+    .form input[type="time"] {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 13px;
+      padding: 14px;
+      outline: none;
+    }
+
+
+    .form input:focus {
+      border-color: var(--text);
+    }
+
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+
+    .field-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+
+    /* =========================
+       TONES
+    ========================== */
+
+    .tone-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+
+    .tone-option {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 15px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 38px 1fr 28px;
+      align-items: center;
+      text-align: left;
+      color: var(--text);
+    }
+
+
+    .tone-option.selected {
+      border-color: var(--text);
+      box-shadow: 0 0 0 1px var(--text);
+    }
+
+
+    .tone-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .tone-option strong {
+      display: block;
+      font-size: 13px;
+    }
+
+
+    .tone-option small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+
+    .tone-play {
+      text-align: center;
+      font-size: 11px;
+    }
+
+
+    /* =========================
+       REPEAT
+    ========================== */
+
+    .repeat-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+
+    .radio-option {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 13px;
+      padding: 13px;
+      flex-direction: row !important;
+      align-items: center;
+    }
+
+
+    .radio-option input {
+      accent-color: var(--text);
+    }
+
+
+    /* =========================
+       SETTINGS
+    ========================== */
+
+    .settings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+
+    .setting-item {
+      min-height: 65px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 13px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+
+    .setting-item strong {
+      display: block;
+      font-size: 13px;
+    }
+
+
+    .setting-item small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+
+    .clickable {
+      cursor: pointer;
+    }
+
+
+    /* =========================
+       SWITCH
+    ========================== */
+
+    .switch {
+      width: 48px;
+      height: 28px;
+      padding: 3px;
+      border: 0;
+      border-radius: 20px;
+      background: #d0d0d0;
+      transition: 0.2s;
+    }
+
+
+    .switch span {
+      display: block;
+      width: 22px;
+      height: 22px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+
+    .switch.active {
+      background: var(--accent);
+    }
+
+
+    .switch.active span {
+      transform: translateX(20px);
+    }
+
+
+    /* =========================
+       ABOUT
+    ========================== */
+
+    .about {
+      text-align: center;
+      margin-top: 45px;
+      color: var(--muted);
+    }
+
+
+    .about strong {
+      color: var(--text);
+      font-size: 13px;
+    }
+
+
+    .about p {
+      margin: 5px 0;
+      font-size: 12px;
+    }
+
+
+    .about small {
+      font-size: 10px;
+    }
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 25px;
+      transform:
+        translateX(-50%)
+        translateY(20px);
+
+      background: var(--text);
+      color: var(--accent-text);
+
+      padding: 11px 15px;
+      border-radius: 12px;
+
+      font-size: 12px;
+
+      opacity: 0;
+      pointer-events: none;
+
+      transition: 0.2s;
+
+      z-index: 1000;
+
+      white-space: nowrap;
+    }
+
+
+    .toast.show {
+      opacity: 1;
+      transform:
+        translateX(-50%)
+        translateY(0);
+    }
+
+
+    /* =========================
+       DARK MODE
+    ========================== */
+
+    body.dark {
+      --bg: #101010;
+      --card: #181818;
+      --text: #f5f5f5;
+      --muted: #929292;
+      --border: #292929;
+      --accent: #f5f5f5;
+      --accent-text: #111111;
+      --shadow: none;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 420px) {
+
+      .app {
+        padding:
+          16px
+          14px
+          30px;
+      }
+
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="app">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="topbar">
+
+      <div class="brand">
+
+        <div class="brand-mark">
+          B
+        </div>
+
+        <div>
+
+          <div class="brand-name">
+            BELTONE
+          </div>
+
+          <div class="brand-tagline">
+            Your day, in the right tone.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="settingsBtn"
+        class="icon-btn"
+        aria-label="Settings"
+      >
+        ⚙
+      </button>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         HOME
+    ====================================================== -->
+
+    <main
+      id="homeView"
+      class="view"
+    >
+
+
+      <section
+        id="nextReminderSection"
+        class="next-section"
+      >
+
+        <div class="section-label">
+          NEXT REMINDER
+        </div>
+
+
+        <div
+          id="nextReminderCard"
+          class="next-card"
+        >
+
+          <div class="empty-next">
+
+            <div class="empty-icon">
+              🔔
+            </div>
+
+            <div>
+
+              <strong>
+                No upcoming reminders
+              </strong>
+
+              <p>
+                Add your first reminder.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <section class="today-section">
+
+        <div class="section-header">
+
+          <div class="section-label">
+            TODAY
+          </div>
+
+          <span
+            id="todayCount"
+            class="count"
+          >
+            0
+          </span>
+
+        </div>
+
+
+        <div
+          id="todayList"
+          class="reminder-list"
+        ></div>
+
+      </section>
+
+
+
+      <button
+        id="addReminderBtn"
+        class="primary-btn add-btn"
+      >
+
+        <span>
+          ＋
+        </span>
+
+        Add Reminder
+
+      </button>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         NEW / EDIT REMINDER
+    ====================================================== -->
+
+    <main
+      id="reminderView"
+      class="view hidden"
+    >
+
+
+      <div class="page-header">
+
+        <button
+          id="backFromReminder"
+          class="back-btn"
+        >
+          ←
+        </button>
+
+
+        <div>
+
+          <h1 id="reminderPageTitle">
+            New Reminder
+          </h1>
+
+          <p>
+            Create a simple reminder.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <form
+        id="reminderForm"
+        class="form"
+      >
+
+
+        <input
+          type="hidden"
+          id="reminderId"
+        />
+
+
+
+        <label>
+
+          <span>
+            Title
+          </span>
+
+          <input
+            id="titleInput"
+            type="text"
+            maxlength="80"
+            placeholder="e.g. Call Ahmed"
+            required
+          />
+
+        </label>
+
+
+
+        <div class="form-row">
+
+
+          <label>
+
+            <span>
+              Date
+            </span>
+
+            <input
+              id="dateInput"
+              type="date"
+              required
+            />
+
+          </label>
+
+
+          <label>
+
+            <span>
+              Time
+            </span>
+
+            <input
+              id="timeInput"
+              type="time"
+              required
+            />
+
+          </label>
+
+
+        </div>
+
+
+
+        <div class="field-block">
+
+          <span class="field-title">
+            Tone
+          </span>
+
+
+          <div
+            id="toneOptions"
+            class="tone-options"
+          >
+
+
+            <button
+              type="button"
+              class="tone-option"
+              data-tone="classic"
+            >
+
+              <span class="tone-icon">
+                🔔
+              </span>
+
+              <span>
+
+                <strong>
+                  Classic
+                </strong>
+
+                <small>
+                  Simple & clear
+                </small>
+
+              </span>
+
+              <span class="tone-play">
+                ▶
+              </span>
+
+            </button>
+
+
+
+            <button
+              type="button"
+              class="tone-option"
+              data-tone="soft"
+            >
+
+              <span class="tone-icon">
+                🌿
+              </span>
+
+              <span>
+
+                <strong>
+                  Soft
+                </strong>
+
+                <small>
+                  Calm & gentle
+                </small>
+
+              </span>
+
+              <span class="tone-play">
+                ▶
+              </span>
+
+            </button>
+
+
+
+            <button
+              type="button"
+              class="tone-option"
+              data-tone="bright"
+            >
+
+              <span class="tone-icon">
+                ✨
+              </span>
+
+              <span>
+
+                <strong>
+                  Bright
+                </strong>
+
+                <small>
+                  Positive & light
+                </small>
+
+              </span>
+
+              <span class="tone-play">
+                ▶
+              </span>
+
+            </button>
+
+
+
+            <button
+              type="button"
+              class="tone-option"
+              data-tone="alert"
+            >
+
+              <span class="tone-icon">
+                🚨
+              </span>
+
+              <span>
+
+                <strong>
+                  Alert
+                </strong>
+
+                <small>
+                  Hard to miss
+                </small>
+
+              </span>
+
+              <span class="tone-play">
+                ▶
+              </span>
+
+            </button>
+
+
+          </div>
+
+        </div>
+
+
+
+        <div class="field-block">
+
+          <span class="field-title">
+            Repeat
+          </span>
+
+
+          <div class="repeat-options">
+
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="repeat"
+                value="never"
+                checked
+              />
+
+              <span>
+                Never
+              </span>
+
+            </label>
+
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="repeat"
+                value="daily"
+              />
+
+              <span>
+                Daily
+              </span>
+
+            </label>
+
+
+          </div>
+
+        </div>
+
+
+
+        <button
+          class="primary-btn"
+          type="submit"
+        >
+          Save Reminder
+        </button>
+
+
+        <button
+          id="deleteReminderBtn"
+          type="button"
+          class="danger-btn hidden"
+        >
+          Delete Reminder
+        </button>
+
+
+      </form>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         SETTINGS
+    ====================================================== -->
+
+    <main
+      id="settingsView"
+      class="view hidden"
+    >
+
+
+      <div class="page-header">
+
+        <button
+          id="backFromSettings"
+          class="back-btn"
+        >
+          ←
+        </button>
+
+
+        <div>
+
+          <h1>
+            Settings
+          </h1>
+
+          <p>
+            Make Beltone work your way.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <section class="settings-list">
+
+
+        <div class="setting-item">
+
+          <div>
+
+            <strong>
+              Notifications
+            </strong>
+
+            <small>
+              Allow Beltone to notify you.
+            </small>
+
+          </div>
+
+
+          <button
+            id="notificationToggle"
+            class="switch"
+          >
+
+            <span></span>
+
+          </button>
+
+        </div>
+
+
+
+        <div
+          class="setting-item clickable"
+          id="defaultToneSetting"
+        >
+
+          <div>
+
+            <strong>
+              Default tone
+            </strong>
+
+            <small id="defaultToneValue">
+              Classic
+            </small>
+
+          </div>
+
+          <span>
+            ›
+          </span>
+
+        </div>
+
+
+
+        <div class="setting-item">
+
+          <div>
+
+            <strong>
+              Default snooze
+            </strong>
+
+            <small>
+              10 minutes
+            </small>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="setting-item">
+
+          <div>
+
+            <strong>
+              Dark mode
+            </strong>
+
+            <small>
+              Use a darker appearance.
+            </small>
+
+          </div>
+
+
+          <button
+            id="darkModeToggle"
+            class="switch"
+          >
+
+            <span></span>
+
+          </button>
+
+        </div>
+
+
+
+        <div class="setting-item">
+
+          <div>
+
+            <strong>
+              Language
+            </strong>
+
+            <small>
+              English
+            </small>
+
+          </div>
+
+        </div>
+
+
+
+        <button
+          id="installBtn"
+          class="secondary-btn hidden"
+        >
+          Install Beltone
+        </button>
+
+
+      </section>
+
+
+
+      <div class="about">
+
+        <strong>
+          Beltone.app
+        </strong>
+
+        <p>
+          Your day, in the right tone.
+        </p>
+
+        <small>
+          Version 1.0.0
+        </small>
+
+      </div>
+
+
+    </main>
+
+
+  </div>
+
+
+
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div
+    id="toast"
+    class="toast"
+  ></div>
+
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script>
+
+    /* =========================================
+       BELTONE APP
+       Simple PWA Reminder App
+    ========================================== */
+
+
+    const STORAGE_KEY =
+      "beltone_reminders";
+
+    const SETTINGS_KEY =
+      "beltone_settings";
+
+
+    /* =========================================
+       STATE
+    ========================================== */
+
+    let reminders =
+      loadReminders();
+
+    let settings =
+      loadSettings();
+
+    let currentTone =
+      settings.defaultTone ||
+      "classic";
+
+    let deferredInstallPrompt =
+      null;
+
+
+
+    /* =========================================
+       DOM
+    ========================================== */
+
+    const homeView =
+      document.getElementById(
+        "homeView"
+      );
+
+    const reminderView =
+      document.getElementById(
+        "reminderView"
+      );
+
+    const settingsView =
+      document.getElementById(
+        "settingsView"
+      );
+
+
+    const addReminderBtn =
+      document.getElementById(
+        "addReminderBtn"
+      );
+
+    const settingsBtn =
+      document.getElementById(
+        "settingsBtn"
+      );
+
+
+    const backFromReminder =
+      document.getElementById(
+        "backFromReminder"
+      );
+
+    const backFromSettings =
+      document.getElementById(
+        "backFromSettings"
+      );
+
+
+    const reminderForm =
+      document.getElementById(
+        "reminderForm"
+      );
+
+
+    const reminderId =
+      document.getElementById(
+        "reminderId"
+      );
+
+    const titleInput =
+      document.getElementById(
+        "titleInput"
+      );
+
+    const dateInput =
+      document.getElementById(
+        "dateInput"
+      );
+
+    const timeInput =
+      document.getElementById(
+        "timeInput"
+      );
+
+
+    const reminderPageTitle =
+      document.getElementById(
+        "reminderPageTitle"
+      );
+
+
+    const deleteReminderBtn =
+      document.getElementById(
+        "deleteReminderBtn"
+      );
+
+
+    const toneOptions =
+      document.querySelectorAll(
+        ".tone-option"
+      );
+
+
+    const todayList =
+      document.getElementById(
+        "todayList"
+      );
+
+
+    const todayCount =
+      document.getElementById(
+        "todayCount"
+      );
+
+
+    const nextReminderCard =
+      document.getElementById(
+        "nextReminderCard"
+      );
+
+
+    const notificationToggle =
+      document.getElementById(
+        "notificationToggle"
+      );
+
+
+    const darkModeToggle =
+      document.getElementById(
+        "darkModeToggle"
+      );
+
+
+    const defaultToneValue =
+      document.getElementById(
+        "defaultToneValue"
+      );
+
+
+    const installBtn =
+      document.getElementById(
+        "installBtn"
+      );
+
+
+    const toast =
+      document.getElementById(
+        "toast"
+      );
+
+
+
+    /* =========================================
+       STORAGE
+    ========================================== */
+
+    function loadReminders() {
+
+      try {
+
+        return (
+          JSON.parse(
+            localStorage.getItem(
+              STORAGE_KEY
+            )
+          ) || []
+        );
+
+      } catch {
+
+        return [];
+
+      }
+
+    }
+
+
+    function saveReminders() {
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(
+          reminders
+        )
+      );
+
+    }
+
+
+    function loadSettings() {
+
+      try {
+
+        return {
+
+          notifications: false,
+
+          defaultTone:
+            "classic",
+
+          darkMode: false,
+
+          ...JSON.parse(
+            localStorage.getItem(
+              SETTINGS_KEY
+            )
+          )
+
+        };
+
+      } catch {
+
+        return {
+
+          notifications: false,
+
+          defaultTone:
+            "classic",
+
+          darkMode: false
+
+        };
+
+      }
+
+    }
+
+
+    function saveSettings() {
+
+      localStorage.setItem(
+        SETTINGS_KEY,
+        JSON.stringify(
+          settings
+        )
+      );
+
+    }
+
+
+
+    /* =========================================
+       UTILITIES
+    ========================================== */
+
+    function todayString() {
+
+      const now =
+        new Date();
+
+
+      const year =
+        now.getFullYear();
+
+
+      const month =
+        String(
+          now.getMonth() + 1
+        ).padStart(2, "0");
+
+
+      const day =
+        String(
+          now.getDate()
+        ).padStart(2, "0");
+
+
+      return (
+        `${year}-${month}-${day}`
+      );
+
+    }
+
+
+    function formatDate(
+      dateString
+    ) {
+
+      const date =
+        new Date(
+          `${dateString}T00:00:00`
+        );
+
+
+      return date.toLocaleDateString(
+        undefined,
+        {
+          weekday: "short",
+          month: "short",
+          day: "numeric"
+        }
+      );
+
+    }
+
+
+    function formatTime(
+      timeString
+    ) {
+
+      const [
+        hours,
+        minutes
+      ] =
+        timeString.split(":");
+
+
+      const date =
+        new Date();
+
+
+      date.setHours(
+        Number(hours),
+        Number(minutes),
+        0,
+        0
+      );
+
+
+      return date.toLocaleTimeString(
+        undefined,
+        {
+          hour: "numeric",
+          minute: "2-digit"
+        }
+      );
+
+    }
+
+
+    function escapeHtml(
+      value
+    ) {
+
+      return String(value)
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+
+    function showToast(
+      message
+    ) {
+
+      toast.textContent =
+        message;
+
+
+      toast.classList.add(
+        "show"
+      );
+
+
+      setTimeout(
+        () => {
+
+          toast.classList.remove(
+            "show"
+          );
+
+        },
+        2200
+      );
+
+    }
+
+
+
+    /* =========================================
+       NAVIGATION
+    ========================================== */
+
+    function showView(
+      view
+    ) {
+
+      homeView.classList.add(
+        "hidden"
+      );
+
+      reminderView.classList.add(
+        "hidden"
+      );
+
+      settingsView.classList.add(
+        "hidden"
+      );
+
+
+      view.classList.remove(
+        "hidden"
+      );
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    function openHome() {
+
+      renderHome();
+
+      showView(
+        homeView
+      );
+
+    }
+
+
+    function openSettings() {
+
+      updateSettingsUI();
+
+      showView(
+        settingsView
+      );
+
+    }
+
+
+    function openNewReminder() {
+
+      reminderForm.reset();
+
+
+      reminderId.value =
+        "";
+
+
+      titleInput.value =
+        "";
+
+
+      dateInput.value =
+        todayString();
+
+
+      timeInput.value =
+        getDefaultTime();
+
+
+      currentTone =
+        settings.defaultTone ||
+        "classic";
+
+
+      selectTone(
+        currentTone
+      );
+
+
+      reminderPageTitle.textContent =
+        "New Reminder";
+
+
+      deleteReminderBtn.classList.add(
+        "hidden"
+      );
+
+
+      showView(
+        reminderView
+      );
+
+    }
+
+
+    function openEditReminder(
+      id
+    ) {
+
+      const reminder =
+        reminders.find(
+          reminder =>
+            reminder.id === id
+        );
+
+
+      if (!reminder) {
+        return;
+      }
+
+
+      reminderId.value =
+        reminder.id;
+
+
+      titleInput.value =
+        reminder.title;
+
+
+      dateInput.value =
+        reminder.date;
+
+
+      timeInput.value =
+        reminder.time;
+
+
+      currentTone =
+        reminder.tone;
+
+
+      selectTone(
+        currentTone
+      );
+
+
+      const repeatRadio =
+        document.querySelector(
+          `input[name="repeat"][value="${reminder.repeat}"]`
+        );
+
+
+      if (repeatRadio) {
+        repeatRadio.checked =
+          true;
+      }
+
+
+      reminderPageTitle.textContent =
+        "Edit Reminder";
+
+
+      deleteReminderBtn.classList.remove(
+        "hidden"
+      );
+
+
+      showView(
+        reminderView
+      );
+
+    }
+
+
+    function getDefaultTime() {
+
+      const now =
+        new Date();
+
+
+      now.setMinutes(
+        Math.ceil(
+          now.getMinutes() / 5
+        ) * 5
+      );
+
+
+      return (
+        `${String(
+          now.getHours()
+        ).padStart(2, "0")}:${String(
+          now.getMinutes()
+        ).padStart(2, "0")}`
+      );
+
+    }
+
+
+
+    /* =========================================
+       HOME
+    ========================================== */
+
+    function renderHome() {
+
+      const today =
+        todayString();
+
+
+      const todayReminders =
+        reminders
+
+          .filter(
+            reminder =>
+              reminder.date === today &&
+              !reminder.completed
+          )
+
+          .sort(
+            (a, b) =>
+              a.time.localeCompare(
+                b.time
+              )
+          );
+
+
+      todayCount.textContent =
+        todayReminders.length;
+
+
+      if (
+        !todayReminders.length
+      ) {
+
+        todayList.innerHTML = `
+          <div class="empty-list">
+            Nothing planned for today.
+          </div>
+        `;
+
+      } else {
+
+        todayList.innerHTML =
+          todayReminders
+            .map(
+              renderReminderItem
+            )
+            .join("");
+
+      }
+
+
+      renderNextReminder();
+
+    }
+
+
+    function renderReminderItem(
+      reminder
+    ) {
+
+      return `
+
+        <div class="reminder-item">
+
+          <div class="reminder-main">
+
+            <div class="reminder-title">
+
+              ${escapeHtml(
+                reminder.title
+              )}
+
+            </div>
+
+
+            <div class="reminder-meta">
+
+              ${formatTime(
+                reminder.time
+              )}
+
+              ${
+                reminder.repeat ===
+                "daily"
+                  ? " · Daily"
+                  : ""
+              }
+
+            </div>
+
+          </div>
+
+
+          <div class="reminder-actions">
+
+
+            <button
+              class="small-btn"
+              onclick="openEditReminder('${reminder.id}')"
+              aria-label="Edit"
+            >
+              ✏️
+            </button>
+
+
+            <button
+              class="small-btn"
+              onclick="completeReminder('${reminder.id}')"
+              aria-label="Done"
+            >
+              ✓
+            </button>
+
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    function renderNextReminder() {
+
+      const now =
+        new Date();
+
+
+      const upcoming =
+        reminders
+
+          .filter(
+            reminder =>
+              !reminder.completed &&
+              new Date(
+                `${reminder.date}T${reminder.time}`
+              ) >= now
+          )
+
+          .sort(
+            (a, b) =>
+              new Date(
+                `${a.date}T${a.time}`
+              ) -
+              new Date(
+                `${b.date}T${b.time}`
+              )
+          )[0];
+
+
+      if (!upcoming) {
+
+        nextReminderCard.innerHTML = `
+
+          <div class="empty-next">
+
+            <div class="empty-icon">
+              🔔
+            </div>
+
+            <div>
+
+              <strong>
+                No upcoming reminders
+              </strong>
+
+              <p>
+                Add your first reminder.
+              </p>
+
+            </div>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      nextReminderCard.innerHTML = `
+
+        <div
+          onclick="openEditReminder('${upcoming.id}')"
+          style="cursor:pointer"
+        >
+
+          <div class="section-label">
+
+            ${formatDate(
+              upcoming.date
+            )}
+
+          </div>
+
+
+          <div class="next-reminder-title">
+
+            ${escapeHtml(
+              upcoming.title
+            )}
+
+          </div>
+
+
+          <div class="next-reminder-time">
+
+            ${formatTime(
+              upcoming.time
+            )}
+
+          </div>
+
+
+          <div class="next-reminder-tone">
+
+            ${getToneLabel(
+              upcoming.tone
+            )}
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+
+    /* =========================================
+       SAVE / EDIT REMINDERS
+    ========================================== */
+
+    reminderForm.addEventListener(
+      "submit",
+      event => {
+
+        event.preventDefault();
+
+
+        const id =
+          reminderId.value ||
+          crypto.randomUUID();
+
+
+        const repeat =
+          document.querySelector(
+            'input[name="repeat"]:checked'
+          ).value;
+
+
+        const existing =
+          reminders.find(
+            reminder =>
+              reminder.id === id
+          );
+
+
+        const reminder = {
+
+          id,
+
+          title:
+            titleInput.value.trim(),
+
+          date:
+            dateInput.value,
+
+          time:
+            timeInput.value,
+
+          tone:
+            currentTone,
+
+          repeat,
+
+          completed:
+            existing
+              ? existing.completed
+              : false,
+
+          lastNotified:
+            existing
+              ? existing.lastNotified
+              : null
+
+        };
+
+
+        if (existing) {
+
+          reminders =
+            reminders.map(
+              item =>
+                item.id === id
+                  ? reminder
+                  : item
+            );
+
+        } else {
+
+          reminders.push(
+            reminder
+          );
+
+        }
+
+
+        saveReminders();
+
+
+        showToast(
+          "Reminder saved"
+        );
+
+
+        openHome();
+
+      }
+    );
+
+
+
+    function completeReminder(
+      id
+    ) {
+
+      reminders =
+        reminders.map(
+          reminder =>
+            reminder.id === id
+              ? {
+                  ...reminder,
+                  completed: true
+                }
+              : reminder
+        );
+
+
+      saveReminders();
+
+
+      renderHome();
+
+
+      showToast(
+        "Done ✓"
+      );
+
+    }
+
+
+    function deleteCurrentReminder() {
+
+      const id =
+        reminderId.value;
+
+
+      if (!id) {
+        return;
+      }
+
+
+      reminders =
+        reminders.filter(
+          reminder =>
+            reminder.id !== id
+        );
+
+
+      saveReminders();
+
+
+      showToast(
+        "Reminder deleted"
+      );
+
+
+      openHome();
+
+    }
+
+
+    deleteReminderBtn.addEventListener(
+      "click",
+      deleteCurrentReminder
+    );
+
+
+
+    /* =========================================
+       TONES
+    ========================================== */
+
+    function getToneLabel(
+      tone
+    ) {
+
+      const labels = {
+
+        classic:
+          "🔔 Classic",
+
+        soft:
+          "🌿 Soft",
+
+        bright:
+          "✨ Bright",
+
+        alert:
+          "🚨 Alert"
+
+      };
+
+
+      return (
+        labels[tone] ||
+        labels.classic
+      );
+
+    }
+
+
+    function selectTone(
+      tone
+    ) {
+
+      currentTone =
+        tone;
+
+
+      toneOptions.forEach(
+        option => {
+
+          option.classList.toggle(
+            "selected",
+            option.dataset.tone ===
+              tone
+          );
+
+        }
+      );
+
+    }
+
+
+    toneOptions.forEach(
+      option => {
+
+        option.addEventListener(
+          "click",
+          () => {
+
+            selectTone(
+              option.dataset.tone
+            );
+
+
+            playTone(
+              option.dataset.tone
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+
+    /* =========================================
+       WEB AUDIO TONES
+    ========================================== */
+
+    function playTone(
+      type
+    ) {
+
+      const AudioContext =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+
+      if (!AudioContext) {
+        return;
+      }
+
+
+      const audio =
+        new AudioContext();
+
+
+      const frequencies = {
+
+        classic:
+          [660, 880],
+
+        soft:
+          [440, 554],
+
+        bright:
+          [660, 990, 1320],
+
+        alert:
+          [880, 440, 880]
+
+      };
+
+
+      const notes =
+        frequencies[type] ||
+        frequencies.classic;
+
+
+      notes.forEach(
+        (
+          frequency,
+          index
+        ) => {
+
+          const oscillator =
+            audio.createOscillator();
+
+
+          const gain =
+            audio.createGain();
+
+
+          oscillator.frequency.value =
+            frequency;
+
+
+          oscillator.type =
+            "sine";
+
+
+          gain.gain.setValueAtTime(
+            0.0001,
+            audio.currentTime +
+              index * 0.18
+          );
+
+
+          gain.gain.exponentialRampToValueAtTime(
+            0.18,
+            audio.currentTime +
+              index * 0.18 +
+              0.02
+          );
+
+
+          gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audio.currentTime +
+              index * 0.18 +
+              0.16
+          );
+
+
+          oscillator.connect(
+            gain
+          );
+
+
+          gain.connect(
+            audio.destination
+          );
+
+
+          oscillator.start(
+            audio.currentTime +
+              index * 0.18
+          );
+
+
+          oscillator.stop(
+            audio.currentTime +
+              index * 0.18 +
+              0.18
+          );
+
+        }
+      );
+
+    }
+
+
+
+    /* =========================================
+       SETTINGS
+    ========================================== */
+
+    function updateSettingsUI() {
+
+      notificationToggle.classList.toggle(
+        "active",
+        settings.notifications
+      );
+
+
+      darkModeToggle.classList.toggle(
+        "active",
+        settings.darkMode
+      );
+
+
+      defaultToneValue.textContent =
+        getToneLabel(
+          settings.defaultTone
+        );
+
+    }
+
+
+    notificationToggle.addEventListener(
+      "click",
+      async () => {
+
+        if (
+          !(
+            "Notification" in
+            window
+          )
+        ) {
+
+          showToast(
+            "Notifications are not supported."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          Notification.permission ===
+          "granted"
+        ) {
+
+          settings.notifications =
+            !settings.notifications;
+
+        } else {
+
+          const permission =
+            await Notification.requestPermission();
+
+
+          settings.notifications =
+            permission ===
+            "granted";
+
+        }
+
+
+        saveSettings();
+
+
+        updateSettingsUI();
+
+      }
+    );
+
+
+    darkModeToggle.addEventListener(
+      "click",
+      () => {
+
+        settings.darkMode =
+          !settings.darkMode;
+
+
+        saveSettings();
+
+
+        applyTheme();
+
+
+        updateSettingsUI();
+
+      }
+    );
+
+
+    function applyTheme() {
+
+      document.body.classList.toggle(
+        "dark",
+        settings.darkMode
+      );
+
+    }
+
+
+
+    /* =========================================
+       DEFAULT TONE
+    ========================================== */
+
+    document
+      .getElementById(
+        "defaultToneSetting"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          const tones = [
+
+            "classic",
+
+            "soft",
+
+            "bright",
+
+            "alert"
+
+          ];
+
+
+          const currentIndex =
+            tones.indexOf(
+              settings.defaultTone
+            );
+
+
+          settings.defaultTone =
+            tones[
+              (currentIndex + 1) %
+                tones.length
+            ];
+
+
+          saveSettings();
+
+
+          updateSettingsUI();
+
+
+          showToast(
+            `Default tone: ${getToneLabel(
+              settings.defaultTone
+            )}`
+          );
+
+        }
+      );
+
+
+
+    /* =========================================
+       NOTIFICATION SCHEDULER
+    ========================================== */
+
+    async function checkReminders() {
+
+      if (
+        !settings.notifications
+      ) {
+        return;
+      }
+
+
+      if (
+        !(
+          "Notification" in
+          window
+        ) ||
+        Notification.permission !==
+          "granted"
+      ) {
+
+        return;
+
+      }
+
+
+      const now =
+        new Date();
+
+
+      const today =
+        todayString();
+
+
+      for (
+        const reminder of
+          reminders
+      ) {
+
+        if (
+          reminder.completed
+        ) {
+
+          continue;
+
+        }
+
+
+        const [
+          hours,
+          minutes
+        ] =
+          reminder.time
+            .split(":")
+            .map(Number);
+
+
+        let shouldNotify =
+          false;
+
+
+        if (
+          reminder.repeat ===
+          "daily"
+        ) {
+
+          if (
+
+            reminder.date <=
+              today &&
+
+            reminder.lastNotified !==
+              today &&
+
+            now.getHours() ===
+              hours &&
+
+            now.getMinutes() ===
+              minutes
+
+          ) {
+
+            shouldNotify =
+              true;
+
+          }
+
+        } else {
+
+          const target =
+            new Date(
+              `${reminder.date}T${reminder.time}`
+            );
+
+
+          const difference =
+            Math.abs(
+              now.getTime() -
+              target.getTime()
+            );
+
+
+          if (
+
+            difference <=
+              60000 &&
+
+            !reminder.lastNotified
+
+          ) {
+
+            shouldNotify =
+              true;
+
+          }
+
+        }
+
+
+        if (
+          shouldNotify
+        ) {
+
+          await sendReminderNotification(
+            reminder
+          );
+
+
+          reminder.lastNotified =
+            reminder.repeat ===
+            "daily"
+
+              ? today
+
+              : new Date()
+                  .toISOString();
+
+
+          saveReminders();
+
+
+          renderHome();
+
+        }
+
+      }
+
+    }
+
+
+
+    async function sendReminderNotification(
+      reminder
+    ) {
+
+      playTone(
+        reminder.tone
+      );
+
+
+      try {
+
+        const registration =
+          await navigator
+            .serviceWorker
+            .ready;
+
+
+        await registration.showNotification(
+          `🔔 Beltone — ${reminder.title}`,
+          {
+
+            body:
+              "It's time.",
+
+            icon:
+              "./icons/icon.svg",
+
+            badge:
+              "./icons/icon.svg",
+
+            tag:
+              `beltone-${reminder.id}`,
+
+            data: {
+
+              id:
+                reminder.id
+
+            },
+
+            actions: [
+
+              {
+                action:
+                  "done",
+
+                title:
+                  "Done"
+              },
+
+              {
+                action:
+                  "snooze",
+
+                title:
+                  "Snooze 10m"
+              }
+
+            ]
+
+          }
+        );
+
+
+      } catch {
+
+        if (
+          Notification.permission ===
+          "granted"
+        ) {
+
+          new Notification(
+            `🔔 Beltone — ${reminder.title}`,
+            {
+              body:
+                "It's time."
+            }
+          );
+
+        }
+
+      }
+
+    }
+
+
+
+    /* =========================================
+       SERVICE WORKER MESSAGES
+    ========================================== */
+
+    if (
+      "serviceWorker" in
+      navigator
+    ) {
+
+      navigator.serviceWorker
+        .addEventListener(
+          "message",
+          event => {
+
+            const data =
+              event.data;
+
+
+            if (!data) {
+              return;
+            }
+
+
+            if (
+              data.type ===
+                "DONE" &&
+              data.id
+            ) {
+
+              completeReminder(
+                data.id
+              );
+
+            }
+
+
+            if (
+              data.type ===
+                "SNOOZE" &&
+              data.id
+            ) {
+
+              snoozeReminder(
+                data.id
+              );
+
+            }
+
+          }
+        );
+
+    }
+
+
+
+    function snoozeReminder(
+      id
+    ) {
+
+      const reminder =
+        reminders.find(
+          item =>
+            item.id === id
+        );
+
+
+      if (!reminder) {
+        return;
+      }
+
+
+      const now =
+        new Date();
+
+
+      now.setMinutes(
+        now.getMinutes() +
+          10
+      );
+
+
+      const date =
+        `${now.getFullYear()}-${String(
+          now.getMonth() + 1
+        ).padStart(2, "0")}-${String(
+          now.getDate()
+        ).padStart(2, "0")}`;
+
+
+      const time =
+        `${String(
+          now.getHours()
+        ).padStart(2, "0")}:${String(
+          now.getMinutes()
+        ).padStart(2, "0")}`;
+
+
+      reminder.date =
+        date;
+
+
+      reminder.time =
+        time;
+
+
+      reminder.lastNotified =
+        null;
+
+
+      saveReminders();
+
+
+      renderHome();
+
+
+      showToast(
+        "Snoozed for 10 minutes"
+      );
+
+    }
+
+
+
+    /* =========================================
+       PWA INSTALL
+    ========================================== */
+
+    window.addEventListener(
+      "beforeinstallprompt",
+      event => {
+
+        event.preventDefault();
+
+
+        deferredInstallPrompt =
+          event;
+
+
+        installBtn.classList.remove(
+          "hidden"
+        );
+
+      }
+    );
+
+
+    installBtn.addEventListener(
+      "click",
+      async () => {
+
+        if (
+          !deferredInstallPrompt
+        ) {
+
+          return;
+
+        }
+
+
+        deferredInstallPrompt.prompt();
+
+
+        const result =
+          await deferredInstallPrompt
+            .userChoice;
+
+
+        if (
+          result.outcome ===
+          "accepted"
+        ) {
+
+          showToast(
+            "Beltone installed"
+          );
+
+        }
+
+
+        deferredInstallPrompt =
+          null;
+
+
+        installBtn.classList.add(
+          "hidden"
+        );
+
+      }
+    );
+
+
+
+    /* =========================================
+       SERVICE WORKER REGISTRATION
+    ========================================== */
+
+    if (
+      "serviceWorker" in
+      navigator
+    ) {
+
+      window.addEventListener(
+        "load",
+        () => {
+
+          navigator.serviceWorker
+            .register(
+              "./sw.js"
+            )
+            .then(
+              () => {
+
+                console.log(
+                  "Beltone service worker registered."
+                );
+
+              }
+            )
+            .catch(
+              error => {
+
+                console.error(
+                  "Service worker error:",
+                  error
+                );
+
+              }
+            );
+
+        }
+      );
+
+    }
+
+
+
+    /* =========================================
+       URL ACTIONS
+    ========================================== */
+
+    function handleUrlAction() {
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const action =
+        params.get(
+          "action"
+        );
+
+
+      const id =
+        params.get(
+          "id"
+        );
+
+
+      if (
+        !action ||
+        !id
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        action ===
+        "snooze"
+      ) {
+
+        setTimeout(
+          () => {
+
+            snoozeReminder(
+              id
+            );
+
+          },
+          500
+        );
+
+      }
+
+
+      if (
+        action ===
+        "done"
+      ) {
+
+        setTimeout(
+          () => {
+
+            completeReminder(
+              id
+            );
+
+          },
+          500
+        );
+
+      }
+
+
+      history.replaceState(
+        {},
+        "",
+        window.location.pathname
+      );
+
+    }
+
+
+
+    /* =========================================
+       EVENTS
+    ========================================== */
+
+    addReminderBtn.addEventListener(
+      "click",
+      openNewReminder
+    );
+
+
+    settingsBtn.addEventListener(
+      "click",
+      openSettings
+    );
+
+
+    backFromReminder.addEventListener(
+      "click",
+      openHome
+    );
+
+
+    backFromSettings.addEventListener(
+      "click",
+      openHome
+    );
+
+
+
+    /* =========================================
+       INITIALIZATION
+    ========================================== */
+
+    applyTheme();
+
+    updateSettingsUI();
+
+    renderHome();
+
+    handleUrlAction();
+
+
+    /*
+      Check every 15 seconds.
+
+      IMPORTANT:
+      Browser limitations mean that this
+      scheduler works reliably while the
+      Beltone page/PWA is running.
+
+      A true notification scheduler while
+      the app is completely closed requires
+      Push API + backend/server.
+    */
+
+    setInterval(
+      checkReminders,
+      15000
+    );
+
+
+    checkReminders();
+
+  </script>
+
+</body>
+</html>
+```
