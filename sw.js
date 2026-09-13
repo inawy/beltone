@@ -1,140 +1,136 @@
-const CACHE_NAME = "beltone-v1.1.0";
+/* =========================================================
+   Beltone Service Worker
+   Strategy:
+   - HTML (navigation): network-first
+   - Assets: cache-first
+   ========================================================= */
+
+const CACHE_NAME = "beltone-v1.2.0";
 
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
+  "./icons/icon.svg",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
 ];
 
-/* =========================
-   INSTALL
-========================= */
-
-self.addEventListener("install", event => {
+/* ---------- INSTALL ---------- */
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(APP_SHELL);
-    })
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.allSettled(APP_SHELL.map((url) => cache.add(url)))
+    )
   );
-
   self.skipWaiting();
 });
 
-/* =========================
-   ACTIVATE
-========================= */
-
-self.addEventListener("activate", event => {
+/* ---------- ACTIVATE ---------- */
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      );
-    })
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))
+      )
+    )
   );
-
   self.clients.claim();
 });
 
-/* =========================
-   FETCH
-========================= */
+/* ---------- FETCH ---------- */
+self.addEventListener("fetch", (event) => {
+  const { request } = event;
+  if (request.method !== "GET") return;
 
-self.addEventListener("fetch", event => {
-  const request = event.request;
+  const url = new URL(request.url);
 
-  if (request.method !== "GET") {
+  // فقط نفس الأصل
+  if (url.origin !== self.location.origin) return;
+
+  const isHTML =
+    request.mode === "navigate" ||
+    (request.headers.get("accept") || "").includes("text/html");
+
+  // ============ HTML: network-first ============
+  if (isHTML) {
+    // لا نخزّن URLs مع query string (action URLs)
+    if (url.search) {
+      event.respondWith(fetch(request));
+      return;
+    }
+
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          return response;
+        })
+        .catch(() =>
+          caches.match(request).then(
+            (r) => r || caches.match("./index.html")
+          )
+        )
+    );
     return;
   }
 
+  // ============ Assets: cache-first ============
   event.respondWith(
-    caches.match(request).then(cachedResponse => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
+    caches.match(request).then((cached) => {
+      if (cached) return cached;
 
-      return fetch(request)
-        .then(response => {
-          if (
-            !response ||
-            response.status !== 200 ||
-            response.type === "opaque"
-          ) {
-            return response;
-          }
-
-          const responseClone =
-            response.clone();
-
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(
-              request,
-              responseClone
-            );
-          });
-
+      return fetch(request).then((response) => {
+        if (
+          !response ||
+          response.status !== 200 ||
+          response.type === "opaque"
+        ) {
           return response;
-        })
-        .catch(() => {
-          return caches.match(
-            "./index.html"
-          );
-        });
+        }
+
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        return response;
+      });
     })
   );
 });
 
-/* =========================
-   NOTIFICATION CLICK
-========================= */
+/* ---------- NOTIFICATION CLICK ---------- */
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
 
-self.addEventListener(
-  "notificationclick",
-  event => {
-    event.notification.close();
+  const action = event.action; // "done" | "snooze" | ""
+  const data = event.notification.data || {};
+  const id = data.id;
 
-    const action =
-      event.action;
+  if (!id) return;
 
-    const data =
-      event.notification.data || {};
+  event.waitUntil(
+    self.clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientList) => {
+        const client = clientList[0];
 
-    const id =
-      data.id;
-
-    if (!id) {
-      return;
-    }
-
-    event.waitUntil(
-      clients.matchAll({
-        type: "window",
-        includeUncontrolled: true
-      }).then(clientList => {
-
-        const url =
-          `./?action=${encodeURIComponent(
-            action || "open"
-          )}&id=${encodeURIComponent(id)}`;
-
-        for (
-          const client of clientList
-        ) {
-          if ("focus" in client) {
-            client.navigate(url);
-            return client.focus();
+        // التاب مفتوح: أرسل رسالة، لا تعيد التحميل
+        if (client && client.postMessage) {
+          if (action === "done" || action === "snooze") {
+            client.postMessage({ type: action.toUpperCase(), id });
           }
+          return client.focus();
         }
 
-        if (clients.openWindow) {
-          return clients.openWindow(url);
+        // التاب مغلق: افتح التطبيق مع query string
+        const url = new URL("./", self.registration.scope);
+
+        if (action === "done" || action === "snooze") {
+          url.searchParams.set("action", action);
+          url.searchParams.set("id", id);
         }
 
+        return self.clients.openWindow(url.href);
       })
-    );
-  }
-);
+  );
+});
