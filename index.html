@@ -216,18 +216,36 @@
     .install-text strong { display: block; font-size: 14px; }
     .install-text p { margin: 4px 0 0; color: var(--muted); font-size: 11px; line-height: 1.45; }
 
-    .install-action {
-      border: 0;
-      background: var(--accent);
-      color: var(--accent-text);
+    .install-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .install-action,
+    .install-dismiss {
+      flex: 1;
       border-radius: 11px;
-      padding: 9px 12px;
+      padding: 10px 12px;
       font-weight: 700;
-      font-size: 11px;
+      font-size: 12px;
       white-space: nowrap;
     }
 
-    .install-action:active { transform: scale(0.98); }
+    .install-action {
+      border: 0;
+      background: var(--brass);
+      color: #FBFAF5;
+    }
+
+    .install-dismiss {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+    }
+
+    .install-action:active,
+    .install-dismiss:active { transform: scale(0.98); }
 
     /* =========================================================
        SECTIONS
@@ -641,7 +659,6 @@
       .app { padding: 16px 14px 30px; }
       .form-row { grid-template-columns: 1fr; }
       .install-content { align-items: flex-start; }
-      .install-action { padding-inline: 10px; }
     }
   </style>
 </head>
@@ -670,6 +687,9 @@
             <strong id="installTitle">Install Beltone</strong>
             <p id="installDescription">Add Beltone to your device for quick access.</p>
           </div>
+        </div>
+        <div class="install-actions">
+          <button id="installDismissBtn" class="install-dismiss" type="button">Continue to site</button>
           <button id="installBtnHome" class="install-action" type="button">Install</button>
         </div>
       </section>
@@ -881,6 +901,7 @@
 
     let currentTone = "classic";
     let deferredInstallPrompt = null;
+    let installDismissedThisSession = false;
     let toastTimer = null;
     let audioCtx = null;
 
@@ -910,6 +931,7 @@
     const installCard = $("installCard");
     const installBtnHome = $("installBtnHome");
     const installBtnSettings = $("installBtnSettings");
+    const installDismissBtn = $("installDismissBtn");
     const languageSetting = $("languageSetting");
     const languageValue = $("languageValue");
     const toast = $("toast");
@@ -953,6 +975,7 @@
         installDescription: "Add Beltone to your device for quick access.",
         install: "Install",
         installed: "Beltone installed",
+        continueToSite: "Continue to site",
         english: "English",
         arabic: "العربية",
         classic: "Classic",
@@ -1013,6 +1036,7 @@
         installDescription: "أضف Beltone إلى جهازك للوصول السريع.",
         install: "تثبيت",
         installed: "تم تثبيت Beltone",
+        continueToSite: "متابعة للموقع",
         english: "English",
         arabic: "العربية",
         classic: "كلاسيك",
@@ -1751,9 +1775,12 @@
       );
     }
 
+    function isIOS() {
+      return /iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
+
     function getInstallDescription() {
-      const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-      if (isIOS && !deferredInstallPrompt) {
+      if (isIOS() && !deferredInstallPrompt) {
         return settings.language === "ar"
           ? "للتثبيت اختر المشاركة ثم إضافة إلى الشاشة الرئيسية."
           : "Use Share, then Add to Home Screen.";
@@ -1766,10 +1793,22 @@
       $("installDescription").textContent = getInstallDescription();
       installBtnHome.textContent = t("install");
       installBtnSettings.textContent = t("installBeltone");
+      installDismissBtn.textContent = t("continueToSite");
 
-      const showInstall = !isStandalone() && deferredInstallPrompt;
+      // iOS never supports a programmatic install prompt, so there is
+      // nothing for the button to do there beyond repeating the
+      // instructions already shown in the description — hide it instead
+      // of offering a button that can't act.
+      installBtnHome.classList.toggle("hidden", isIOS() && !deferredInstallPrompt);
+
+      const showInstall = !isStandalone() && !installDismissedThisSession;
       installCard.classList.toggle("hidden", !showInstall);
-      installBtnSettings.classList.toggle("hidden", !showInstall);
+      installBtnSettings.classList.toggle("hidden", isStandalone());
+    }
+
+    function dismissInstallCard() {
+      installDismissedThisSession = true;
+      updateInstallUI();
     }
 
     window.addEventListener("beforeinstallprompt", (event) => {
@@ -1779,25 +1818,33 @@
     });
 
     async function installBeltone() {
-      if (!deferredInstallPrompt) {
-        showToast(
-          settings.language === "ar"
-            ? "التثبيت غير متاح حاليًا في هذا المتصفح."
-            : "Installation is not available right now."
-        );
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        updateInstallUI();
         return;
       }
-      deferredInstallPrompt.prompt();
-      await deferredInstallPrompt.userChoice;
-      deferredInstallPrompt = null;
-      updateInstallUI();
+
+      if (isIOS()) {
+        showToast(getInstallDescription());
+        return;
+      }
+
+      showToast(
+        settings.language === "ar"
+          ? "التثبيت غير متاح حاليًا في هذا المتصفح."
+          : "Installation is not available right now."
+      );
     }
 
     installBtnHome.addEventListener("click", installBeltone);
     installBtnSettings.addEventListener("click", installBeltone);
+    installDismissBtn.addEventListener("click", dismissInstallCard);
 
     window.addEventListener("appinstalled", () => {
       deferredInstallPrompt = null;
+      installDismissedThisSession = true;
       updateInstallUI();
       showToast(t("installed"));
     });
