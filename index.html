@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#111111">
+  <meta name="theme-color" content="#EFECE3">
   <meta name="description" content="Beltone — Your day, in the right tone.">
   <meta name="color-scheme" content="light dark">
 
@@ -13,33 +13,64 @@
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     /* =========================================================
        THEME
+       One family (Cairo) carries Arabic + Latin with the same
+       personality, so the brand doesn't shift character when the
+       language switches. Neutrals are a warm stone/ink pair; the
+       four reminder tones each get their own accent so "tone" is
+       something you see, not just a word in a list.
        ========================================================= */
     :root {
-      --bg: #f5f5f5;
-      --card: #ffffff;
-      --text: #111111;
-      --muted: #777777;
-      --border: #e5e5e5;
-      --accent: #111111;
-      --accent-text: #ffffff;
-      --danger: #d64545;
-      --danger-border: #f0cccc;
-      --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      --bg: #EFECE3;
+      --card: #FBFAF5;
+      --text: #22201A;
+      --muted: #8A8371;
+      --border: #E1DCCC;
+      --accent: #22201A;
+      --accent-text: #FBFAF5;
+      --brass: #B8842E;
+      --brass-tint: #F3E6CC;
+      --danger: #B4472F;
+      --danger-border: #E9CDC2;
+      --shadow: 0 10px 26px rgba(34, 32, 26, 0.07);
+
+      --tone-classic: #4B4335;
+      --tone-classic-tint: #E7E2D5;
+      --tone-soft: #52785C;
+      --tone-soft-tint: #DEEBE0;
+      --tone-bright: #B8842E;
+      --tone-bright-tint: #F3E6CC;
+      --tone-alert: #B4472F;
+      --tone-alert-tint: #F3DBD3;
     }
 
     body.dark {
-      --bg: #101010;
-      --card: #181818;
-      --text: #f5f5f5;
-      --muted: #929292;
-      --border: #292929;
-      --accent: #f5f5f5;
-      --accent-text: #111111;
-      --danger-border: #4a2a2a;
+      --bg: #16140F;
+      --card: #201D17;
+      --text: #F3EFE4;
+      --muted: #9B9483;
+      --border: #322D23;
+      --accent: #F3EFE4;
+      --accent-text: #1A1812;
+      --brass: #D8A64B;
+      --brass-tint: #3A2E17;
+      --danger-border: #4A2A22;
       --shadow: 0 0 0 transparent;
+
+      --tone-classic: #D8D2C0;
+      --tone-classic-tint: #2B2820;
+      --tone-soft: #8FBE9B;
+      --tone-soft-tint: #223226;
+      --tone-bright: #D8A64B;
+      --tone-bright-tint: #3A2E17;
+      --tone-alert: #E08A72;
+      --tone-alert-tint: #3B2420;
     }
 
     /* =========================================================
@@ -51,7 +82,7 @@
       margin: 0;
       padding: 0;
       min-height: 100%;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: "Cairo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       -webkit-tap-highlight-color: transparent;
@@ -101,8 +132,8 @@
       height: 42px;
       min-width: 42px;
       border-radius: 13px;
-      background: var(--accent);
-      color: var(--accent-text);
+      background: var(--brass);
+      color: #FBFAF5;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -172,8 +203,8 @@
       width: 46px;
       height: 46px;
       min-width: 46px;
-      background: var(--accent);
-      color: var(--accent-text);
+      background: var(--brass);
+      color: #FBFAF5;
       border-radius: 14px;
       display: flex;
       align-items: center;
@@ -202,9 +233,8 @@
        SECTIONS
        ========================================================= */
     .section-label {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
+      font-size: 13px;
+      font-weight: 700;
       color: var(--muted);
     }
 
@@ -227,8 +257,14 @@
       background: var(--card);
       border-radius: 22px;
       box-shadow: var(--shadow);
-      padding: 20px;
+      padding: 22px;
+      border-inline-start: 5px solid var(--tone-classic);
+      transition: border-color 0.2s;
     }
+
+    .next-card[data-tone="soft"] { border-inline-start-color: var(--tone-soft); }
+    .next-card[data-tone="bright"] { border-inline-start-color: var(--tone-bright); }
+    .next-card[data-tone="alert"] { border-inline-start-color: var(--tone-alert); }
 
     .empty-next {
       display: flex;
@@ -259,38 +295,60 @@
       border-radius: 18px;
     }
 
-    .next-reminder-title {
-      font-size: 22px;
-      font-weight: 750;
-      margin: 5px 0;
+    .next-reminder-date {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
     }
 
-    .next-reminder-time { color: var(--muted); font-size: 14px; }
+    .next-reminder-title {
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 6px 0 2px;
+    }
+
+    .next-reminder-time { color: var(--muted); font-size: 15px; font-weight: 600; }
 
     .next-reminder-tone {
       display: inline-flex;
-      margin-top: 14px;
-      padding: 7px 10px;
-      border-radius: 9px;
-      background: var(--bg);
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: var(--tone-classic-tint);
+      color: var(--tone-classic);
       font-size: 12px;
+      font-weight: 700;
     }
+
+    .next-reminder-tone[data-tone="soft"] { background: var(--tone-soft-tint); color: var(--tone-soft); }
+    .next-reminder-tone[data-tone="bright"] { background: var(--tone-bright-tint); color: var(--tone-bright); }
+    .next-reminder-tone[data-tone="alert"] { background: var(--tone-alert-tint); color: var(--tone-alert); }
 
     /* =========================================================
        REMINDERS
        ========================================================= */
-    .reminder-list { display: flex; flex-direction: column; gap: 9px; }
-
-    .reminder-item {
+    .reminder-list {
+      display: flex;
+      flex-direction: column;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 17px;
-      padding: 14px;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .reminder-item {
+      padding: 14px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      border-bottom: 1px solid var(--border);
     }
+
+    .reminder-item:last-child { border-bottom: 0; }
 
     .reminder-main { min-width: 0; flex: 1; }
 
@@ -316,12 +374,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.1s;
     }
 
     .small-btn:active { transform: scale(0.94); }
 
     .empty-list {
-      padding: 24px 10px;
+      padding: 26px 10px;
       color: var(--muted);
       text-align: center;
       font-size: 13px;
@@ -447,15 +506,24 @@
       width: 34px;
       height: 34px;
       border-radius: 10px;
-      background: var(--bg);
+      background: var(--tone-classic-tint);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
+    .tone-option[data-tone="soft"] .tone-icon { background: var(--tone-soft-tint); }
+    .tone-option[data-tone="bright"] .tone-icon { background: var(--tone-bright-tint); }
+    .tone-option[data-tone="alert"] .tone-icon { background: var(--tone-alert-tint); }
+
+    .tone-option.selected .tone-icon { box-shadow: inset 0 0 0 2px var(--tone-classic); }
+    .tone-option[data-tone="soft"].selected .tone-icon { box-shadow: inset 0 0 0 2px var(--tone-soft); }
+    .tone-option[data-tone="bright"].selected .tone-icon { box-shadow: inset 0 0 0 2px var(--tone-bright); }
+    .tone-option[data-tone="alert"].selected .tone-icon { box-shadow: inset 0 0 0 2px var(--tone-alert); }
+
     .tone-option strong { display: block; font-size: 13px; }
     .tone-option small { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
-    .tone-play { text-align: center; font-size: 11px; }
+    .tone-play { text-align: center; font-size: 11px; color: var(--muted); }
 
     /* =========================================================
        REPEAT
@@ -478,19 +546,26 @@
     /* =========================================================
        SETTINGS
        ========================================================= */
-    .settings-list { display: flex; flex-direction: column; gap: 8px; }
+    .settings-list {
+      display: flex;
+      flex-direction: column;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
 
     .setting-item {
       min-height: 65px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 13px 14px;
+      padding: 13px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      border-bottom: 1px solid var(--border);
     }
+
+    .setting-item:last-child { border-bottom: 0; }
 
     .setting-item strong { display: block; font-size: 13px; }
     .setting-item small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
@@ -505,10 +580,12 @@
       padding: 3px;
       border: 0;
       border-radius: 20px;
-      background: #d0d0d0;
+      background: #CFC7AE;
       transition: background 0.2s;
       flex-shrink: 0;
     }
+
+    body.dark .switch { background: #45402F; }
 
     .switch span {
       display: block;
@@ -598,13 +675,13 @@
       </section>
 
       <section class="next-section">
-        <div class="section-label" data-i18n="nextReminder">NEXT REMINDER</div>
+        <div class="section-label" data-i18n="nextReminder">Next reminder</div>
         <div id="nextReminderCard" class="next-card"></div>
       </section>
 
       <section class="today-section">
         <div class="section-header">
-          <div class="section-label" data-i18n="today">TODAY</div>
+          <div class="section-label" data-i18n="today">Today</div>
           <span id="todayCount" class="count">0</span>
         </div>
         <div id="todayList" class="reminder-list"></div>
@@ -843,8 +920,8 @@
     const translations = {
       en: {
         tagline: "Your day, in the right tone.",
-        nextReminder: "NEXT REMINDER",
-        today: "TODAY",
+        nextReminder: "Next reminder",
+        today: "Today",
         addReminder: "Add Reminder",
         noUpcoming: "No upcoming reminders",
         addFirstReminder: "Add your first reminder.",
@@ -1306,6 +1383,7 @@
       const next = candidates[0];
 
       if (!next) {
+        delete nextReminderCard.dataset.tone;
         nextReminderCard.innerHTML = `
           <div class="empty-next">
             <div class="empty-icon" aria-hidden="true">🔔</div>
@@ -1320,12 +1398,14 @@
 
       const { reminder } = next;
 
+      nextReminderCard.dataset.tone = reminder.tone || "classic";
+
       nextReminderCard.innerHTML = `
         <button type="button" class="next-reminder-button" data-action="edit" data-id="${escapeHtml(reminder.id)}">
-          <div class="section-label">${escapeHtml(formatDate(getOccurrenceDate(reminder)))}</div>
+          <div class="next-reminder-date">${escapeHtml(formatDate(getOccurrenceDate(reminder)))}</div>
           <div class="next-reminder-title">${escapeHtml(reminder.title)}</div>
           <div class="next-reminder-time">${escapeHtml(formatTime(reminder.time))}</div>
-          <div class="next-reminder-tone">${escapeHtml(getToneLabel(reminder.tone))}</div>
+          <div class="next-reminder-tone" data-tone="${escapeHtml(reminder.tone || "classic")}">${escapeHtml(getToneLabel(reminder.tone))}</div>
         </button>
       `;
     }
