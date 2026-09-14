@@ -1,5 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#B8842E"/>
-  <text x="32" y="45" font-family="Arial, Helvetica, sans-serif" font-weight="800"
-        font-size="34" fill="#FBFAF5" text-anchor="middle">B</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="120" fill="#111111"></rect>
+
+  <text x="256" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="300" font-weight="800" fill="#ffffff">
+    B
+  </text>
 </svg>
