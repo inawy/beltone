@@ -416,6 +416,21 @@
     [dir="ltr"] .switch[aria-checked="true"] span { transform: translateX(20px); }
     [dir="rtl"] .switch[aria-checked="true"] span { transform: translateX(-20px); }
 
+    /* BACKGROUND TIP */
+    .background-tip {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: var(--brass-tint);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-top: 14px;
+    }
+
+    .background-tip-icon { font-size: 16px; line-height: 1.4; }
+    .background-tip p { margin: 0; font-size: 11px; line-height: 1.6; color: var(--text); }
+    .background-tip strong { font-size: 12px; }
+
     /* ABOUT */
     .about { text-align: center; margin-top: 45px; color: var(--muted); }
     .about strong { color: var(--text); font-size: 13px; }
@@ -653,6 +668,11 @@
         </button>
       </section>
 
+      <div id="backgroundTip" class="background-tip hidden">
+        <span class="background-tip-icon" aria-hidden="true">💡</span>
+        <p><strong data-i18n="backgroundTipTitle">For reliable reminders</strong><br><span data-i18n="backgroundTipBody">Keep Beltone installed and don't force-close it — reminders fire from the background while it's running, not once it's fully closed.</span></p>
+      </div>
+
       <div class="about">
         <strong>Beltone.app</strong>
         <p id="aboutTagline">Your day, in the right tone.</p>
@@ -792,7 +812,9 @@
         tomorrow: "Tomorrow",
         overdue: "Overdue",
         timeToReminder: "It's time.",
-        titleRequired: "Please enter a title."
+        titleRequired: "Please enter a title.",
+        backgroundTipTitle: "For reliable reminders",
+        backgroundTipBody: "Keep Beltone installed and don't force-close it — reminders fire from the background while it's running, not once it's fully closed."
       },
       ar: {
         tagline: "يومك، بالنغمة المناسبة.",
@@ -857,7 +879,9 @@
         tomorrow: "غدًا",
         overdue: "متأخر",
         timeToReminder: "حان الوقت.",
-        titleRequired: "الرجاء إدخال عنوان."
+        titleRequired: "الرجاء إدخال عنوان.",
+        backgroundTipTitle: "عشان التذكيرات توصلك بثقة",
+        backgroundTipBody: "خلّي بيلتون مثبّت وما تقفله قفل كامل (force-close) — التذكير يشتغل من الخلفية طول ما التطبيق شغّال، مو بعد ما يتقفل تمامًا."
       }
     };
 
@@ -1452,6 +1476,8 @@
 
       defaultToneValue.textContent = getToneLabel(settings.defaultTone);
       languageValue.textContent = settings.language === "ar" ? t("arabic") : t("english");
+
+      $("backgroundTip").classList.toggle("hidden", !settings.notifications);
     }
 
     notificationToggle.addEventListener("click", async () => {
@@ -1478,7 +1504,35 @@
       await saveAppSettings();
       updateSettingsUI();
       showToast(settings.notifications ? t("notificationsEnabled") : t("notificationsDenied"));
+
+      if (settings.notifications) tryRegisterPeriodicSync();
     });
+
+    /* =========================================================
+       PERIODIC BACKGROUND SYNC (best effort, Chrome/Edge only)
+       Lets the service worker wake up occasionally to check for
+       due reminders even when no Beltone tab/window is open.
+       The browser decides the actual interval based on how often
+       you use the app (often hours, never guaranteed) — this is
+       a safety net on top of the in-app check, not a replacement
+       for keeping Beltone running for on-time reminders.
+       ========================================================= */
+    async function tryRegisterPeriodicSync() {
+      if (!("serviceWorker" in navigator)) return;
+      if (!("periodicSync" in ServiceWorkerRegistration.prototype)) return;
+
+      try {
+        const registration = await navigator.serviceWorker.ready;
+        const status = await navigator.permissions.query({ name: "periodic-background-sync" });
+        if (status.state !== "granted") return;
+
+        await registration.periodicSync.register("beltone-check-reminders", {
+          minInterval: 15 * 60 * 1000
+        });
+      } catch {
+        /* Not supported or not permitted in this browser/context — silently skip. */
+      }
+    }
 
     darkModeToggle.addEventListener("click", async () => {
       settings.darkMode = !settings.darkMode;
@@ -1761,6 +1815,10 @@
 
         setInterval(checkReminders, 15000);
         await checkReminders();
+
+        if (settings.notifications && "Notification" in window && Notification.permission === "granted") {
+          tryRegisterPeriodicSync();
+        }
       } catch (error) {
         console.error("Beltone initialization failed:", error);
         showToast("Beltone could not initialize storage.");
