@@ -29,8 +29,9 @@
       --border: #E1DCCC;
       --accent: #22201A;
       --accent-text: #FBFAF5;
-      --brass: #B8842E;
-      --brass-tint: #F3E6CC;
+      --brass: #22201A;
+      --brass-tint: #E5E1D3;
+      --brass-ink: #FBFAF5;
       --danger: #B4472F;
       --danger-border: #E9CDC2;
       --shadow: 0 10px 26px rgba(34, 32, 26, 0.07);
@@ -56,8 +57,9 @@
       --border: #322D23;
       --accent: #F3EFE4;
       --accent-text: #1A1812;
-      --brass: #D8A64B;
-      --brass-tint: #3A2E17;
+      --brass: #F3EFE4;
+      --brass-tint: #2B2820;
+      --brass-ink: #1A1812;
       --danger-border: #4A2A22;
       --shadow: 0 0 0 transparent;
 
@@ -122,7 +124,7 @@
       width: 42px; height: 42px; min-width: 42px;
       border-radius: 13px;
       background: var(--brass);
-      color: #FBFAF5;
+      color: var(--brass-ink);
       display: flex; align-items: center; justify-content: center;
       font-weight: 800; font-size: 21px;
     }
@@ -170,7 +172,7 @@
     .install-icon {
       width: 46px; height: 46px; min-width: 46px;
       background: var(--brass);
-      color: #FBFAF5;
+      color: var(--brass-ink);
       border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       font-weight: 800;
@@ -187,7 +189,7 @@
       font-weight: 700; font-size: 12px; white-space: nowrap;
     }
 
-    .install-action { border: 0; background: var(--brass); color: #FBFAF5; }
+    .install-action { border: 0; background: var(--brass); color: var(--brass-ink); }
     .install-dismiss { border: 1px solid var(--border); background: transparent; color: var(--text); }
     .install-action:active, .install-dismiss:active { transform: scale(0.98); }
 
