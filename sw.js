@@ -11,7 +11,7 @@
      if the app window isn't open at the time.
    ========================================================= */
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const SHELL_CACHE = `beltone-shell-${CACHE_VERSION}`;
 const FONT_CACHE = `beltone-fonts-${CACHE_VERSION}`;
 
@@ -97,6 +97,113 @@ async function staleWhileRevalidate(request, cacheName) {
     .catch(() => null);
 
   return cached || networkFetch || Response.error();
+}
+
+/* =========================================================
+   PERIODIC BACKGROUND SYNC (best effort)
+   Chrome/Edge may wake this worker occasionally — interval is
+   decided by the browser, not guaranteed, and unsupported in
+   Safari/Firefox. This is a safety net so a reminder isn't
+   missed for hours if Beltone stayed closed, not a precise
+   scheduler. It reads IndexedDB directly since there is no
+   page/window context here.
+   ========================================================= */
+const DB_NAME = 'beltone_local_first';
+const DB_VERSION = 1;
+const REMINDERS_STORE = 'reminders';
+
+self.addEventListener('periodicsync', (event) => {
+  if (event.tag === 'beltone-check-reminders') {
+    event.waitUntil(checkDueReminders());
+  }
+});
+
+function openReminderDb() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+    // No onupgradeneeded here on purpose: the page owns schema
+    // creation, this only ever reads/writes an existing store.
+  });
+}
+
+function dbGetAll(database, storeName) {
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(storeName, 'readonly');
+    const request = tx.objectStore(storeName).getAll();
+    request.onsuccess = () => resolve(request.result || []);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function dbPut(database, storeName, value) {
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(storeName, 'readwrite');
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+    tx.objectStore(storeName).put(value);
+  });
+}
+
+function todayString(date = new Date()) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    String(date.getDate()).padStart(2, '0')
+  ].join('-');
+}
+
+function getNextOccurrence(reminder) {
+  const now = new Date();
+  const target = new Date(`${reminder.date}T${reminder.time}`);
+  if (reminder.repeat !== 'daily') return target;
+  while (target < now) target.setDate(target.getDate() + 1);
+  return target;
+}
+
+async function checkDueReminders() {
+  let database;
+  try {
+    database = await openReminderDb();
+  } catch {
+    return; // DB not created yet (app never opened) — nothing to check.
+  }
+
+  const reminders = await dbGetAll(database, REMINDERS_STORE);
+  const now = new Date();
+  const today = todayString(now);
+
+  for (const reminder of reminders) {
+    if (reminder.repeat !== 'daily' && reminder.completed) continue;
+    if (reminder.repeat === 'daily' && reminder.lastCompletedDate === today) continue;
+
+    const target = getNextOccurrence(reminder);
+    if (target > now) continue;
+
+    const lastNotified = reminder.lastNotifiedAt ? new Date(reminder.lastNotifiedAt) : null;
+    if (lastNotified && lastNotified >= target) continue;
+
+    await showDueNotification(reminder);
+    reminder.lastNotifiedAt = new Date().toISOString();
+    await dbPut(database, REMINDERS_STORE, reminder);
+  }
+
+  database.close();
+}
+
+async function showDueNotification(reminder) {
+  await self.registration.showNotification(`🔔 Beltone — ${reminder.title}`, {
+    body: "It's time.",
+    icon: './icons/icon-192.png',
+    badge: './icons/icon-192.png',
+    tag: `beltone-${reminder.id}`,
+    data: { id: reminder.id },
+    actions: [
+      { action: 'done', title: 'Done' },
+      { action: 'snooze', title: 'Snooze 10m' }
+    ]
+  });
 }
 
 /* =========================================================
